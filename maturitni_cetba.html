@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="cs">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+</head>
+
+<body>
+    <h1>Maturitní četba SPŠT</h1><h3>2025/26</h3>
+    <select>
+        <option value="vsechna">obdobi</option>
+        <option value="18.stol">18. století</option>
+        <option value="19.stol">19. století</option>
+        <option value="svetova">20. a 21. století - světová</option>
+        <option value="ceska">20. a 21. století - česká</option>
+    </select>
+    
+    <select>
+        <option value="druhy">druhy</option>
+        <option value="poezie">poezie</option>
+        <option value="proza">próza</option>
+        <option value="drama">drama</option>
+    </select>
+    
+    <select>
+        <option value="stav">zobrazit</option>
+        <option value="precteno">přečteno</option>
+        <option value="rozecteno">rozečteno</option>
+        <option value="planuju">plánuju</option>
+    </select>
+    
+    <div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th></th> <th><i class="precteno"></i></th>     <!--ikonky-->
+                <th><i class="rozecteno"></i></th>
+                <th><i class="planuju"></i></th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            </tbody>
+    </table>
+    </div>
+
+    <script>
+    const csvFile = 'data.csv'; 
+
+    Papa.parse(csvFile, {
+        download: true,
+        header: true,
+        delimiter: ";",
+        skipEmptyLines: true,
+        complete: function(results) {
+            const data = results.data;
+            const tableBody = document.getElementById('table-body');
+
+            data.forEach((row, index) => {
+                const tr = document.createElement('tr');
+                
+                const groupName = "group-" + (row.ID || index);
+
+                tr.innerHTML = `
+                    <td>
+                        <span class="kniha-info">${row["Autor"]}:</span>
+                        <span class="autor">${row["Název díla"]}</span>
+                    </td>
+                    <td class="control-col">
+                        <i class="informace"></i>
+                        <input type="radio" name="${groupName}">
+                    </td>
+                    <td class="control-col">
+                        <input type="radio" name="${groupName}">
+                    </td>
+                    <td class="control-col">
+                        <input type="radio" name="${groupName}">
+                    </td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+    });
+    </script>
+</body>
+</html>
