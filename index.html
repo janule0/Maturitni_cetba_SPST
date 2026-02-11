@@ -9,23 +9,23 @@
 
 <body>
     <h1>Maturitní četba SPŠT</h1><h3>2025/26</h3>
-    <select>
+    <select id="filter-obdobi">
         <option value="vsechna">obdobi</option>
-        <option value="18.stol">18. století</option>
-        <option value="19.stol">19. století</option>
-        <option value="svetova">20. a 21. století - světová</option>
-        <option value="ceska">20. a 21. století - česká</option>
+        <option value="Světová a česká lit. do konce 18. století">18. století</option>
+        <option value="Světová a česká lit. 19. století">19. století</option>
+        <option value="Světová literatura 20. a 21. století">20. a 21. století - světová</option>
+        <option value="Česká literatura 20. a 21. století">20. a 21. století - česká</option>
     </select>
     
-    <select>
-        <option value="druhy">druhy</option>
+    <select id="filter-druhy">
+        <option value="vsechny">druhy</option>
         <option value="poezie">poezie</option>
-        <option value="proza">próza</option>
+        <option value="próza">próza</option>
         <option value="drama">drama</option>
     </select>
     
-    <select>
-        <option value="stav">zobrazit</option>
+    <select id="filter-stav">
+        <option value="vsechny">zobrazit</option>
         <option value="precteno">přečteno</option>
         <option value="rozecteno">rozečteno</option>
         <option value="planuju">plánuju</option>
@@ -35,7 +35,7 @@
     <table>
         <thead>
             <tr>
-                <th></th> <th><i class="precteno"></i></th>     <!--ikonky-->
+                <th><i class="precteno"></i></th>     <!--ikonky-->
                 <th><i class="rozecteno"></i></th>
                 <th><i class="planuju"></i></th>
             </tr>
@@ -47,41 +47,66 @@
 
     <script>
     const csvFile = 'data.csv'; 
+    let vsechnaData = []; 
+    let stavKnih = JSON.parse(localStorage.getItem('stavMaturitniCetby')) || {};
 
-    Papa.parse(csvFile, {
+    Papa.parse(csvFile, {       //převod csv souboru
         download: true,
         header: true,
         delimiter: ";",
         skipEmptyLines: true,
+        trimHeaders: true,
+        transform: (val) => val.trim(),
         complete: function(results) {
-            const data = results.data;
-            const tableBody = document.getElementById('table-body');
-
-            data.forEach((row, index) => {
-                const tr = document.createElement('tr');
-                
-                const groupName = "group-" + (row.ID || index);
-
-                tr.innerHTML = `
-                    <td>
-                        <span class="kniha-info">${row["Autor"]}:</span>
-                        <span class="autor">${row["Název díla"]}</span>
-                    </td>
-                    <td class="control-col">
-                        <i class="informace"></i>
-                        <input type="radio" name="${groupName}">
-                    </td>
-                    <td class="control-col">
-                        <input type="radio" name="${groupName}">
-                    </td>
-                    <td class="control-col">
-                        <input type="radio" name="${groupName}">
-                    </td>
-                `;
-                tableBody.appendChild(tr);
-            });
+            vsechnaData = results.data;
+            vykresliTabulku();
         }
     });
+
+    function ulozStav(id, hodnota) {        //přečteno, rozečteno, plánuju
+        stavKnih[id] = hodnota;
+        localStorage.setItem('stavMaturitniCetby', JSON.stringify(stavKnih));
+        
+        if (document.getElementById('filter-stav').value !== "vsechny") {
+            vykresliTabulku();
+        }
+    }
+
+    function vykresliTabulku() {
+        const tableBody = document.getElementById('table-body');
+        tableBody.innerHTML = ""; 
+
+        const Obdobii = document.getElementById('filter-obdobi').value;
+        const Druhh = document.getElementById('filter-druhy').value;
+        const Stavv = document.getElementById('filter-stav').value;
+
+        vsechnaData.forEach((row, index) => {
+            const idKnihy = row.ID || `kniha-${index}`;
+            const aktualniStav = stavKnih[idKnihy] || "";
+            
+            const druhUprava = (row["Druh "] || "").toLowerCase();
+            
+            // filtry
+            const filtrObdobi = (Obdobii === "vsechna" || row["Kategorie / Období"] === Obdobii);
+            const filtrDruh = (Druhh === "vsechny" || druhUprava === Druhh.toLowerCase());
+            const filtrStav = (Stavv === "vsechny" || aktualniStav === Stavv);
+
+            if (filtrObdobi && filtrDruh && filtrStav) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${row["Autor"]}:</strong> ${row["Název díla"]}</td>
+                    <td><input type="radio" name="r-${idKnihy}" ${aktualniStav === 'precteno' ? 'checked' : ''} onchange="ulozStav('${idKnihy}', 'precteno')"></td>
+                    <td><input type="radio" name="r-${idKnihy}" ${aktualniStav === 'rozecteno' ? 'checked' : ''} onchange="ulozStav('${idKnihy}', 'rozecteno')"></td>
+                    <td><input type="radio" name="r-${idKnihy}" ${aktualniStav === 'planuju' ? 'checked' : ''} onchange="ulozStav('${idKnihy}', 'planuju')"></td>
+                `;
+                tableBody.appendChild(tr);
+            }
+        });
+    }
+
+    document.getElementById('filter-obdobi').addEventListener('change', vykresliTabulku);
+    document.getElementById('filter-druhy').addEventListener('change', vykresliTabulku);
+    document.getElementById('filter-stav').addEventListener('change', vykresliTabulku);
     </script>
 </body>
 </html>
