@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="cs">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+</head>
+
+<body>
+    <h1>Maturitní četba SPŠT</h1><h3>2025/26</h3>
+    <select id="filter-obdobi">
+        <option value="vsechna">obdobi</option>
+        <option value="Světová a česká lit. do konce 18. století">18. století</option>
+        <option value="Světová a česká lit. 19. století">19. století</option>
+        <option value="Světová literatura 20. a 21. století">20. a 21. století - světová</option>
+        <option value="Česká literatura 20. a 21. století">20. a 21. století - česká</option>
+    </select>
+    
+    <select id="filter-druhy">
+        <option value="vsechny">druhy</option>
+        <option value="poezie">poezie</option>
+        <option value="próza">próza</option>
+        <option value="drama">drama</option>
+    </select>
+    
+    <select id="filter-stav">
+        <option value="vsechny">zobrazit</option>
+        <option value="precteno">přečteno</option>
+        <option value="rozecteno">rozečteno</option>
+        <option value="planuju">plánuju</option>
+    </select>
+    
+    <div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th><i class="precteno"></i></th>     <!--ikonky-->
+                <th><i class="rozecteno"></i></th>
+                <th><i class="planuju"></i></th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            </tbody>
+    </table>
+    </div>
+
+    <script>
+    const csvFile = 'data.csv'; 
+    let vsechnaData = []; 
+    let stavKnih = JSON.parse(localStorage.getItem('stavMaturitniCetby')) || {};
+
+    Papa.parse(csvFile, {       //převod csv souboru
+        download: true,
+        header: true,
+        delimiter: ";",
+        skipEmptyLines: true,
+        trimHeaders: true,
+        transform: (val) => val.trim(),
+        complete: function(results) {
+            vsechnaData = results.data;
+            vykresliTabulku();
+        }
+    });
+
+    function ulozStav(id, hodnota) {        //přečteno, rozečteno, plánuju
+        stavKnih[id] = hodnota;
+        localStorage.setItem('stavMaturitniCetby', JSON.stringify(stavKnih));
+        
+        if (document.getElementById('filter-stav').value !== "vsechny") {
+            vykresliTabulku();
+        }
+    }
+
+    function vykresliTabulku() {
+        const tableBody = document.getElementById('table-body');
+        tableBody.innerHTML = ""; 
+
+        const Obdobii = document.getElementById('filter-obdobi').value;
+        const Druhh = document.getElementById('filter-druhy').value;
+        const Stavv = document.getElementById('filter-stav').value;
+
+        vsechnaData.forEach((row, index) => {
+            const idKnihy = row.ID || `kniha-${index}`;
+            const aktualniStav = stavKnih[idKnihy] || "";
+            
+            const druhUprava = (row["Druh "] || "").toLowerCase();
+            
+            // filtry
+            const filtrObdobi = (Obdobii === "vsechna" || row["Kategorie / Období"] === Obdobii);
+            const filtrDruh = (Druhh === "vsechny" || druhUprava === Druhh.toLowerCase());
+            const filtrStav = (Stavv === "vsechny" || aktualniStav === Stavv);
+
+            if (filtrObdobi && filtrDruh && filtrStav) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${row["Autor"]}:</strong> ${row["Název díla"]}</td>
+                    <td><input type="radio" name="r-${idKnihy}" ${aktualniStav === 'precteno' ? 'checked' : ''} onchange="ulozStav('${idKnihy}', 'precteno')"></td>
+                    <td><input type="radio" name="r-${idKnihy}" ${aktualniStav === 'rozecteno' ? 'checked' : ''} onchange="ulozStav('${idKnihy}', 'rozecteno')"></td>
+                    <td><input type="radio" name="r-${idKnihy}" ${aktualniStav === 'planuju' ? 'checked' : ''} onchange="ulozStav('${idKnihy}', 'planuju')"></td>
+                `;
+                tableBody.appendChild(tr);
+            }
+        });
+    }
+
+    document.getElementById('filter-obdobi').addEventListener('change', vykresliTabulku);
+    document.getElementById('filter-druhy').addEventListener('change', vykresliTabulku);
+    document.getElementById('filter-stav').addEventListener('change', vykresliTabulku);
+    </script>
+</body>
+</html>
