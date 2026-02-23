@@ -64,15 +64,36 @@
         }
     });
 
-    function ulozStav(id, hodnota) {        //přečteno, rozečteno, plánuju
-        stavKnih[id] = hodnota;
-        localStorage.setItem('stavMaturitniCetby', JSON.stringify(stavKnih));
-        
-        if (document.getElementById('filter-stav').value !== "vsechny") {
+    function ulozStav(id, hodnota) {
+    if (stavKnih[id] === hodnota) {
+        delete stavKnih[id];
+    } else {
+        if (!stavKnih[id] && Object.keys(stavKnih).length >= 20) {
+            alert("Do celkového seznamu si můžeš vybrat maximálně 20 knih."); // alert
             vykresliTabulku();
+            return;
         }
-    }
+        // ------------------------------------------
 
+        const autor = vsechnaData.find(row => (row.ID || `${row["Autor"]}-${row["Název díla"]}`) === id)?.["Autor"];
+        const pocetOdAutora = Object.keys(stavKnih).filter(key => {
+            const kniha = vsechnaData.find(r => (r.ID || `${r["Autor"]}-${r["Název díla"]}`) === key);
+            return kniha && kniha["Autor"] === autor && key !== id;
+        }).length;
+
+        if (pocetOdAutora >= 2) {
+            alert(`Od autora ${autor} už máš vybraná 2 díla.`); // alert
+            vykresliTabulku();
+            return;
+        }
+
+        stavKnih[id] = hodnota;
+    }
+    
+    localStorage.setItem('stavMaturitniCetby', JSON.stringify(stavKnih));
+    vykresliTabulku();
+    aktualizujStatistiky();
+}
     function vykresliTabulku() {
         const tableBody = document.getElementById('table-body');
         tableBody.innerHTML = ""; 
