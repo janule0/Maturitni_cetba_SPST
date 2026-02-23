@@ -36,6 +36,19 @@ th
     padding: 5px;
 }
 
+input[type='radio'] {
+  box-sizing: border-box;
+  background: white;
+  outline: 2px solid #333;
+  border: 3px solid white;
+  width: 16px;
+  height: 16px;
+}
+
+input[type='radio']:checked {
+  background: #333;
+}
+
 select
 {
     border-radius: 5px;
