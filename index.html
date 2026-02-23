@@ -65,30 +65,44 @@
     });
 
     function ulozStav(id, hodnota) {
+      // kontrola poctu
     if (stavKnih[id] === hodnota) {
         delete stavKnih[id];
     } else {
-        if (!stavKnih[id] && Object.keys(stavKnih).length >= 20) {
-            alert("Do celkového seznamu si můžeš vybrat maximálně 20 knih."); // alert
-            vykresliTabulku();
-            return;
+
+        if (hodnota === "precteno") {
+            const pocetPrectenych = Object.values(stavKnih).filter(v => v === "precteno").length;
+
+            if (pocetPrectenych >= 20) {
+                alert("Do maturitního seznamu si můžeš vybrat maximálně 20 knih.");
+                vykresliTabulku();
+                return;
+            }
         }
-        // ------------------------------------------
-
+        // kontrola autora
         const autor = vsechnaData.find(row => (row.ID || `${row["Autor"]}-${row["Název díla"]}`) === id)?.["Autor"];
-        const pocetOdAutora = Object.keys(stavKnih).filter(key => {
-            const kniha = vsechnaData.find(r => (r.ID || `${r["Autor"]}-${r["Název díla"]}`) === key);
-            return kniha && kniha["Autor"] === autor && key !== id;
-        }).length;
+        
+        if (hodnota === "precteno" && autor) {
+            const pocetOdAutora = Object.keys(stavKnih).filter(key => {
+                const kniha = vsechnaData.find(r => (r.ID || `${r["Autor"]}-${r["Název díla"]}`) === key);
+                return kniha && kniha["Autor"] === autor && key !== id && stavKnih[key] === "precteno";
+            }).length;
 
-        if (pocetOdAutora >= 2) {
-            alert(`Od autora ${autor} už máš vybraná 2 díla.`); // alert
-            vykresliTabulku();
-            return;
+            if (pocetOdAutora >= 2) {
+                alert(`Od autora ${autor} už máš vybraná 2 díla.`);
+                vykresliTabulku();
+                return;
+            }
         }
 
         stavKnih[id] = hodnota;
     }
+
+    if (typeof vykresliTabulku === "function") {
+        vykresliTabulku();
+    }
+  
+}
     
     localStorage.setItem('stavMaturitniCetby', JSON.stringify(stavKnih));
     vykresliTabulku();
