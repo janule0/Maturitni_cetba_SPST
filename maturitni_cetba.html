@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="cs">
-<script src="myscripts.js"></script> 
 
 <head>
   <meta charset="utf-8">
@@ -36,7 +35,7 @@
     <table>
         <thead>
             <tr>
-                <th><i class="precteno"></i></th>     <!--ikonky-->
+                <th></th> <th><i class="precteno"></i></th>     <!--ikonky-->
                 <th><i class="rozecteno"></i></th>
                 <th><i class="planuju"></i></th>
             </tr>
@@ -49,9 +48,10 @@
     <script>
     const csvFile = 'data.csv'; 
     let vsechnaData = []; 
+    // Objekt pro ukládání stavu (id_knihy: "stav")
     let stavKnih = JSON.parse(localStorage.getItem('stavMaturitniCetby')) || {};
 
-    Papa.parse(csvFile, {       //převod csv souboru
+    Papa.parse(csvFile, {
         download: true,
         header: true,
         delimiter: ";",
@@ -64,10 +64,10 @@
         }
     });
 
-    function ulozStav(id, hodnota) {        //přečteno, rozečteno, plánuju
+    function ulozStav(id, hodnota) {
         stavKnih[id] = hodnota;
         localStorage.setItem('stavMaturitniCetby', JSON.stringify(stavKnih));
-        
+        // Po změně stavu znovu aplikujeme filtr, pokud je zapnutý filtr na stav
         if (document.getElementById('filter-stav').value !== "vsechny") {
             vykresliTabulku();
         }
@@ -77,22 +77,22 @@
         const tableBody = document.getElementById('table-body');
         tableBody.innerHTML = ""; 
 
-        const Obdobii = document.getElementById('filter-obdobi').value;
-        const Druhh = document.getElementById('filter-druhy').value;
-        const Stavv = document.getElementById('filter-stav').value;
+        const vObdobi = document.getElementById('filter-obdobi').value;
+        const vDruh = document.getElementById('filter-druhy').value;
+        const vStav = document.getElementById('filter-stav').value;
 
         vsechnaData.forEach((row, index) => {
             const idKnihy = row.ID || `kniha-${index}`;
             const aktualniStav = stavKnih[idKnihy] || "";
             
-            const druhUprava = (row["Druh "] || "").toLowerCase();
+            const druhZCsv = (row["Druh "] || "").toLowerCase();
             
-            // filtry
-            const filtrObdobi = (Obdobii === "vsechna" || row["Kategorie / Období"] === Obdobii);
-            const filtrDruh = (Druhh === "vsechny" || druhUprava === Druhh.toLowerCase());
-            const filtrStav = (Stavv === "vsechny" || aktualniStav === Stavv);
+            // FILTROVACÍ LOGIKA
+            const matchObdobi = (vObdobi === "vsechna" || row["Kategorie / Období"] === vObdobi);
+            const matchDruh = (vDruh === "vsechny" || druhZCsv === vDruh.toLowerCase());
+            const matchStav = (vStav === "vsechny" || aktualniStav === vStav);
 
-            if (filtrObdobi && filtrDruh && filtrStav) {
+            if (matchObdobi && matchDruh && matchStav) {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td><strong>${row["Autor"]}:</strong> ${row["Název díla"]}</td>
@@ -105,6 +105,7 @@
         });
     }
 
+    // Event listenery pro okamžitou reakci na změnu filtrů
     document.getElementById('filter-obdobi').addEventListener('change', vykresliTabulku);
     document.getElementById('filter-druhy').addEventListener('change', vykresliTabulku);
     document.getElementById('filter-stav').addEventListener('change', vykresliTabulku);

@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="cs">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" type="text/css" href="mat_cetba.css"> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+</head>
+
+<body>
+    <h1><img src="Icon_reader.png" alt="Ikona" style="height: 20px; margin-right: 5px">Maturitní četba SPŠT 2025/26</h1>
+    
+    <div class = "menu">
+        <img src="Icon_checkmark.png" alt="Ok" class="icon">    
+        <img src="Icon_pdf.png" alt="Převod na pdf" class="icon">
+        <img src="Icon_nightmode.png" alt="Noční režim" class="icon">
+        <img src="Icon_eraser.png" alt="Smazat" class="icon">
+    </div>
+    
+    <select id="filter-obdobi">
+        <option value="vsechna">obdobi</option>
+        <option value="Světová a česká lit. do konce 18. století">18. století</option>
+        <option value="Světová a česká lit. 19. století">19. století</option>
+        <option value="Světová literatura 20. a 21. století">20. a 21. století - světová</option>
+        <option value="Česká literatura 20. a 21. století">20. a 21. století - česká</option>
+    </select>
+    
+    <select id="filter-druhy">
+        <option value="vsechny">druhy</option>
+        <option value="poezie">poezie</option>
+        <option value="próza">próza</option>
+        <option value="drama">drama</option>
+    </select>
+    
+    <select id="filter-stav">
+        <option value="vsechny">zobrazit</option>
+        <option value="precteno">přečteno</option>
+        <option value="rozecteno">rozečteno</option>
+        <option value="planuju">plánuju</option>
+    </select>
+    
+    <div class="overview"> 
+        <span>Přečteno </span> <span id="celkemPrecteno"></span><br><br>
+        <span>Období:</span><br> 
+        <span>18.století:</span> <span id="18Precteno"></span><br>
+        <span>19.století:</span> <span id="19Precteno"></span><br>
+        <span>20.století - světová:</span> <span id="20Precteno_sv"></span><br>
+        <span>20.století - česká:</span> <span id="20Precteno_cz"></span><br><br>
+    
+        <span>Literární druhy:</span><br>
+        <span>próza: </span> <span id="prozaPrecteno"></span><br>
+        <span>poezie: </span> <span id="poeziePrecteno"></span><br>
+        <span>drama: </span> <span id="dramaPrecteno"></span><br>
+    </div>    
+        
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th><img src="Icon_star.png" alt="Přečteno" class="icon"></th> 
+                <th><img src="Icon_halfstar.png" alt="Rozečteno" class="icon"></th>
+                <th><img src="Icon_calendar.png" alt="Naplánováno" class="icon"></th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+        </tbody>
+    </table>
+
+    <script>
+    const csvFile = 'data.csv';
+    let vsechnaData = [];
+    let stavKnih = JSON.parse(localStorage.getItem('stavMaturitniCetby')) || {};
+
+    Papa.parse(csvFile, {   //převod csv souboru
+        download: true,
+        header: true,
+        delimiter: ";",
+        skipEmptyLines: true,
+        trimHeaders: true,
+        transform: (val) => val.trim(),
+        complete: function (results) {
+            vsechnaData = results.data;
+            vykresliTabulku();
+            aktualizujStatistiky();
+        }
+    });
+
+    function ulozStav(id, hodnota) {    //přečteno, rozečteno, plánuju, 2 díla od autora
+
+        if (stavKnih[id] === hodnota) {
+            delete stavKnih[id];
+        } else {
+            const autor = vsechnaData.find(row => (row.ID || `${row["Autor"]}-${row["Název díla"]}`) === id)?.["Autor"];
+            const pocetOdAutora = Object.keys(stavKnih).filter(key => {
+                const kniha = vsechnaData.find(r => (r.ID || `${r["Autor"]}-${r["Název díla"]}`) === key);
+                return kniha && kniha["Autor"] === autor && key !== id;
+            }).length;
+
+            if (pocetOdAutora >= 2) {
+                alert(`Od autora ${autor} už máš vybraná 2 díla!`);
+                vykresliTabulku();
+                return;
+            }
+            stavKnih[id] = hodnota;
+        }
+        
+        localStorage.setItem('stavMaturitniCetby', JSON.stringify(stavKnih));
+        vykresliTabulku();
+        aktualizujStatistiky();
+    }
+
+    function aktualizujStatistiky() {
+        const stats = {
+            prectenoCelkem: 0,
+            "Světová a česká lit. do konce 18. století": 0,
+            "Světová a česká lit. 19. století": 0,
+            "Světová literatura 20. a 21. století": 0,
+            "Česká literatura 20. a 21. století": 0,
+            "próza": 0,
+            "poezie": 0,
+            "drama": 0
+        };
+
+        vsechnaData.forEach(row => {
+            const idKnihy = row.ID || `${row["Autor"]}-${row["Název díla"]}`;
+            const stav = stavKnih[idKnihy];
+            const druh = (row["Druh "] || "").toLowerCase().trim();
+            const obdobi = (row["Kategorie / Období"] || "").trim();
+
+            if (stav === "precteno") {
+                stats.prectenoCelkem++;
+            }
+
+            if (stav) {
+                if (stats.hasOwnProperty(obdobi)) stats[obdobi]++;
+                if (stats.hasOwnProperty(druh)) stats[druh]++;
+            }
+        });
+
+        document.getElementById('celkemPrecteno').innerText = `${stats.prectenoCelkem}/20`;
+        document.getElementById('18Precteno').innerText = `${stats["Světová a česká lit. do konce 18. století"]}/2`;
+        document.getElementById('19Precteno').innerText = `${stats["Světová a česká lit. 19. století"]}/3`;
+        document.getElementById('20Precteno_sv').innerText = `${stats["Světová literatura 20. a 21. století"]}/4`;
+        document.getElementById('20Precteno_cz').innerText = `${stats["Česká literatura 20. a 21. století"]}/5`;
+        document.getElementById('prozaPrecteno').innerText = `${stats["próza"]}/2`;
+        document.getElementById('poeziePrecteno').innerText = `${stats["poezie"]}/2`;
+        document.getElementById('dramaPrecteno').innerText = `${stats["drama"]}/2`;
+    }
+
+    function vykresliTabulku() {
+        const tableBody = document.getElementById('table-body');
+        tableBody.innerHTML = "";
+        const fObdobi = document.getElementById('filter-obdobi').value;
+        const fDruh = document.getElementById('filter-druhy').value;
+        const fStav = document.getElementById('filter-stav').value;
+
+        vsechnaData.forEach(row => {
+            const idKnihy = row.ID || `${row["Autor"]}-${row["Název díla"]}`;
+            const aktualniStav = stavKnih[idKnihy] || "";
+            const druhUprava = (row["Druh "] || "").toLowerCase().trim();
+            
+            // filtry
+            const filtrObdobi = (fObdobi === "vsechna" || row["Kategorie / Období"] === fObdobi);
+            const filtrDruh = (fDruh === "vsechny" || druhUprava === fDruh.toLowerCase());
+            const filtrStav = (fStav === "vsechny" || aktualniStav === fStav);
+
+            if (filtrObdobi && filtrDruh && filtrStav) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${row["Autor"]}:</strong> ${row["Název díla"]}</td>
+                    <td><input type="radio" name="r-${idKnihy}" ${aktualniStav === 'precteno' ? 'checked' : ''} onclick="ulozStav('${idKnihy}', 'precteno')"></td>
+                    <td><input type="radio" name="r-${idKnihy}" ${aktualniStav === 'rozecteno' ? 'checked' : ''} onclick="ulozStav('${idKnihy}', 'rozecteno')"></td>
+                    <td><input type="radio" name="r-${idKnihy}" ${aktualniStav === 'planuju' ? 'checked' : ''} onclick="ulozStav('${idKnihy}', 'planuju')"></td>
+                `;
+                tableBody.appendChild(tr);
+            }
+        });
+    }
+
+    document.getElementById('filter-obdobi').addEventListener('change', vykresliTabulku);
+    document.getElementById('filter-druhy').addEventListener('change', vykresliTabulku);
+    document.getElementById('filter-stav').addEventListener('change', vykresliTabulku);
+</script>
+</body>
+</html>
