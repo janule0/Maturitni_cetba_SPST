@@ -67,12 +67,23 @@
         </tbody>
     </table>
 
-    <script>
+<script>
     const csvFile = 'data.csv';
     let vsechnaData = [];
-    let stavKnih = JSON.parse(localStorage.getItem('stavMaturitniCetby')) || {};
+    let stavKnih = {};
 
-    Papa.parse(csvFile, {   //převod csv souboru
+    try { // vic safe
+        const ulozenaData = localStorage.getItem('stavMaturitniCetby');
+        if (ulozenaData) {
+            stavKnih = JSON.parse(ulozenaData);
+            console.log("Úspěšně načteno z paměti:", stavKnih);
+        }
+    } catch (error) {
+        console.error("Chyba při čtení paměti.");
+        stavKnih = {}; 
+    }
+
+    Papa.parse(csvFile, {
         download: true,
         header: true,
         delimiter: ";",
@@ -86,16 +97,15 @@
         }
     });
 
-function ulozStav(id, hodnota) {
+    function ulozStav(id, hodnota) {
         if (stavKnih[id] === hodnota) {
-
             delete stavKnih[id];
         } else {
             // limit 20
             if (hodnota === "precteno") {
                 const pocetPrectenych = Object.values(stavKnih).filter(v => v === "precteno").length;
                 if (pocetPrectenych >= 20) {
-                    alert("Do celkového seznamu (přečteno) si můžeš vybrat maximálně 20 knih.");
+                    alert("Do celkového seznamu si můžeš vybrat maximálně 20 knih.");
                     vykresliTabulku();
                     return;
                 }
@@ -112,7 +122,7 @@ function ulozStav(id, hodnota) {
                 }).length;
 
                 if (pocetOdAutora >= 2) {
-                    alert(`Od autora ${autor} už máš vybraná 2 díla!`);
+                    alert(`Od autora ${autor} už máš vybraná 2 díla.`);
                     vykresliTabulku();
                     return;
                 }
@@ -121,7 +131,9 @@ function ulozStav(id, hodnota) {
             stavKnih[id] = hodnota;
         }
         
+        // BEZPEČNÉ ULOŽENÍ
         localStorage.setItem('stavMaturitniCetby', JSON.stringify(stavKnih));
+        console.log("Uloženo do paměti:", stavKnih);
         
         vykresliTabulku();
         aktualizujStatistiky();
@@ -142,7 +154,8 @@ function ulozStav(id, hodnota) {
         vsechnaData.forEach(row => {
             const idKnihy = row.ID || `${row["Autor"]}-${row["Název díla"]}`;
             const stav = stavKnih[idKnihy];
-            const druh = (row["Druh "] || "").toLowerCase().trim();
+
+            const druh = (row["Druh"] || row["Druh "] || "").toLowerCase().trim();
             const obdobi = (row["Kategorie / Období"] || "").trim();
 
             if (stav === "precteno") {
@@ -172,20 +185,19 @@ function ulozStav(id, hodnota) {
         vsechnaData.forEach(row => {
             const idKnihy = row.ID || `${row["Autor"]}-${row["Název díla"]}`;
             const aktualniStav = stavKnih[idKnihy] || "";
-            const druhUprava = (row["Druh "] || "").toLowerCase().trim();
+            const druhUprava = (row["Druh"] || row["Druh "] || "").toLowerCase().trim();
             
             // filtry
             const filtrObdobi = (fObdobi === "vsechna" || row["Kategorie / Období"] === fObdobi);
             const filtrDruh = (fDruh === "vsechny" || druhUprava === fDruh.toLowerCase());
             const filtrStav = (fStav === "vsechny" || aktualniStav === fStav);
 
-            if (filtrObdobi && filtrDruh && filtrStav) {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td><strong>${row["Autor"]}:</strong> ${row["Název díla"]}</td>
-                    <td><input type="radio" name="r-${idKnihy}" ${aktualniStav === 'precteno' ? 'checked' : ''} onclick="ulozStav('${idKnihy}', 'precteno')"></td>
-                    <td><input type="radio" name="r-${idKnihy}" ${aktualniStav === 'rozecteno' ? 'checked' : ''} onclick="ulozStav('${idKnihy}', 'rozecteno')"></td>
-                    <td><input type="radio" name="r-${idKnihy}" ${aktualniStav === 'planuju' ? 'checked' : ''} onclick="ulozStav('${idKnihy}', 'planuju')"></td>
+                    <td><input type="radio" name="r-${idKnihy}" ${aktualniStav === 'precteno' ? 'checked' : ''} onclick="ulozStav('${safeId}', 'precteno')"></td>
+                    <td><input type="radio" name="r-${idKnihy}" ${aktualniStav === 'rozecteno' ? 'checked' : ''} onclick="ulozStav('${safeId}', 'rozecteno')"></td>
+                    <td><input type="radio" name="r-${idKnihy}" ${aktualniStav === 'planuju' ? 'checked' : ''} onclick="ulozStav('${safeId}', 'planuju')"></td>
                 `;
                 tableBody.appendChild(tr);
             }
