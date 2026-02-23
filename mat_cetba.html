@@ -86,26 +86,43 @@
         }
     });
 
-    function ulozStav(id, hodnota) {    //přečteno, rozečteno, plánuju, 2 díla od autora
-
+function ulozStav(id, hodnota) {
         if (stavKnih[id] === hodnota) {
+
             delete stavKnih[id];
         } else {
-            const autor = vsechnaData.find(row => (row.ID || `${row["Autor"]}-${row["Název díla"]}`) === id)?.["Autor"];
-            const pocetOdAutora = Object.keys(stavKnih).filter(key => {
-                const kniha = vsechnaData.find(r => (r.ID || `${r["Autor"]}-${r["Název díla"]}`) === key);
-                return kniha && kniha["Autor"] === autor && key !== id;
-            }).length;
-
-            if (pocetOdAutora >= 2) {
-                alert(`Od autora ${autor} už máš vybraná 2 díla!`);
-                vykresliTabulku();
-                return;
+            // limit 20
+            if (hodnota === "precteno") {
+                const pocetPrectenych = Object.values(stavKnih).filter(v => v === "precteno").length;
+                if (pocetPrectenych >= 20) {
+                    alert("Do celkového seznamu (přečteno) si můžeš vybrat maximálně 20 knih.");
+                    vykresliTabulku();
+                    return;
+                }
             }
+
+            // kontrola autora
+            const knihaInfo = vsechnaData.find(row => (row.ID || `${row["Autor"]}-${row["Název díla"]}`) === id);
+            const autor = knihaInfo?.["Autor"];
+
+            if (hodnota === "precteno" && autor) {
+                const pocetOdAutora = Object.keys(stavKnih).filter(key => {
+                    const k = vsechnaData.find(r => (r.ID || `${r["Autor"]}-${r["Název díla"]}`) === key);
+                    return k && k["Autor"] === autor && key !== id && stavKnih[key] === "precteno";
+                }).length;
+
+                if (pocetOdAutora >= 2) {
+                    alert(`Od autora ${autor} už máš vybraná 2 díla!`);
+                    vykresliTabulku();
+                    return;
+                }
+            }
+
             stavKnih[id] = hodnota;
         }
         
         localStorage.setItem('stavMaturitniCetby', JSON.stringify(stavKnih));
+        
         vykresliTabulku();
         aktualizujStatistiky();
     }
@@ -130,9 +147,6 @@
 
             if (stav === "precteno") {
                 stats.prectenoCelkem++;
-            }
-
-            if (stav) {
                 if (stats.hasOwnProperty(obdobi)) stats[obdobi]++;
                 if (stats.hasOwnProperty(druh)) stats[druh]++;
             }
