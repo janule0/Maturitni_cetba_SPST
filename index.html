@@ -46,12 +46,12 @@
     </table>
     </div>
 
-<script>
+    <script>
     const csvFile = 'data.csv'; 
     let vsechnaData = []; 
     let stavKnih = JSON.parse(localStorage.getItem('stavMaturitniCetby')) || {};
 
-    Papa.parse(csvFile, {
+    Papa.parse(csvFile, {       //převod csv souboru
         download: true,
         header: true,
         delimiter: ";",
@@ -65,43 +65,51 @@
     });
 
     function ulozStav(id, hodnota) {
-        if (stavKnih[id] === hodnota) {
-            delete stavKnih[id];
-        } else {
-            // Kontrola limitu 20
-            if (hodnota === "precteno") {
-                const pocetPrectenych = Object.values(stavKnih).filter(v => v === "precteno").length;
-                if (pocetPrectenych >= 20) {
-                    alert("Do maturitního seznamu si můžeš vybrat maximálně 20 knih.");
-                    vykresliTabulku();
-                    return;
-                }
-            }
+      // kontrola poctu
+    if (stavKnih[id] === hodnota) {
+        delete stavKnih[id];
+    } else {
 
-            // Kontrola autora
-            const autor = vsechnaData.find(row => (row.ID || `${row["Autor"]}-${row["Název díla"]}`) === id)?.["Autor"];
-            if (hodnota === "precteno" && autor) {
-                const pocetOdAutora = Object.keys(stavKnih).filter(key => {
-                    const kniha = vsechnaData.find(r => (r.ID || `${r["Autor"]}-${r["Název díla"]}`) === key);
-                    return kniha && kniha["Autor"] === autor && key !== id && stavKnih[key] === "precteno";
-                }).length;
+        if (hodnota === "precteno") {
+            const pocetPrectenych = Object.values(stavKnih).filter(v => v === "precteno").length;
 
-                if (pocetOdAutora >= 2) {
-                    alert(`Od autora ${autor} už máš vybraná 2 díla.`);
-                    vykresliTabulku();
-                    return;
-                }
+            if (pocetPrectenych >= 20) {
+                alert("Do maturitního seznamu si můžeš vybrat maximálně 20 knih.");
+                vykresliTabulku();
+                return;
             }
-            stavKnih[id] = hodnota;
+        }
+        // kontrola autora
+        const autor = vsechnaData.find(row => (row.ID || `${row["Autor"]}-${row["Název díla"]}`) === id)?.["Autor"];
+        
+        if (hodnota === "precteno" && autor) {
+            const pocetOdAutora = Object.keys(stavKnih).filter(key => {
+                const kniha = vsechnaData.find(r => (r.ID || `${r["Autor"]}-${r["Název díla"]}`) === key);
+                return kniha && kniha["Autor"] === autor && key !== id && stavKnih[key] === "precteno";
+            }).length;
+
+            if (pocetOdAutora >= 2) {
+                alert(`Od autora ${autor} už máš vybraná 2 díla.`);
+                vykresliTabulku();
+                return;
+            }
         }
 
-        localStorage.setItem('stavMaturitniCetby', JSON.stringify(stavKnih));
+        stavKnih[id] = hodnota;
+    }
+
+    if (typeof vykresliTabulku === "function") {
         vykresliTabulku();
     }
+  
+}
+    
+    localStorage.setItem('stavMaturitniCetby', JSON.stringify(stavKnih));
+    vykresliTabulku();
+    //aktualizujStatistiky(); idk co to znamena
 
     function vykresliTabulku() {
         const tableBody = document.getElementById('table-body');
-        if (!tableBody) return;
         tableBody.innerHTML = ""; 
 
         const Obdobii = document.getElementById('filter-obdobi').value;
@@ -109,12 +117,12 @@
         const Stavv = document.getElementById('filter-stav').value;
 
         vsechnaData.forEach((row, index) => {
-            const idKnihy = row.ID || `${row["Autor"]}-${row["Název díla"]}`;
+            const idKnihy = row.ID || `kniha-${index}`;
             const aktualniStav = stavKnih[idKnihy] || "";
             
             const druhUprava = (row["Druh "] || "").toLowerCase();
             
-            // Filtry
+            // filtry
             const filtrObdobi = (Obdobii === "vsechna" || row["Kategorie / Období"] === Obdobii);
             const filtrDruh = (Druhh === "vsechny" || druhUprava === Druhh.toLowerCase());
             const filtrStav = (Stavv === "vsechny" || aktualniStav === Stavv);
@@ -123,9 +131,9 @@
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td><strong>${row["Autor"]}:</strong> ${row["Název díla"]}</td>
-                    <td><input type="radio" name="r-${idKnihy}" ${aktualniStav === 'precteno' ? 'checked' : ''} onclick="ulozStav('${idKnihy}', 'precteno')"></td>
-                    <td><input type="radio" name="r-${idKnihy}" ${aktualniStav === 'rozecteno' ? 'checked' : ''} onclick="ulozStav('${idKnihy}', 'rozecteno')"></td>
-                    <td><input type="radio" name="r-${idKnihy}" ${aktualniStav === 'planuju' ? 'checked' : ''} onclick="ulozStav('${idKnihy}', 'planuju')"></td>
+                    <td><input type="radio" name="r-${idKnihy}" ${aktualniStav === 'precteno' ? 'checked' : ''} onchange="ulozStav('${idKnihy}', 'precteno')"></td>
+                    <td><input type="radio" name="r-${idKnihy}" ${aktualniStav === 'rozecteno' ? 'checked' : ''} onchange="ulozStav('${idKnihy}', 'rozecteno')"></td>
+                    <td><input type="radio" name="r-${idKnihy}" ${aktualniStav === 'planuju' ? 'checked' : ''} onchange="ulozStav('${idKnihy}', 'planuju')"></td>
                 `;
                 tableBody.appendChild(tr);
             }
@@ -135,6 +143,6 @@
     document.getElementById('filter-obdobi').addEventListener('change', vykresliTabulku);
     document.getElementById('filter-druhy').addEventListener('change', vykresliTabulku);
     document.getElementById('filter-stav').addEventListener('change', vykresliTabulku);
-</script>
+    </script>
 </body>
 </html>
