@@ -68,22 +68,15 @@
     </table>
 
 <script>
-    const csvFile = 'data.csv';
+   const csvFile = 'data.csv';
+
     let vsechnaData = [];
-    let stavKnih = {};
 
-    try { // vic safe
-        const ulozenaData = localStorage.getItem('stavMaturitniCetby');
-        if (ulozenaData) {
-            stavKnih = JSON.parse(ulozenaData);
-            console.log("Úspěšně načteno z paměti:", stavKnih);
-        }
-    } catch (error) {
-        console.error("Chyba při čtení paměti.");
-        stavKnih = {}; 
-    }
+    let stavKnih = JSON.parse(localStorage.getItem('stavMaturitniCetby')) || {};
 
-    Papa.parse(csvFile, {
+
+    Papa.parse(csvFile, {   //převod csv souboru
+
         download: true,
         header: true,
         delimiter: ";",
@@ -91,11 +84,16 @@
         trimHeaders: true,
         transform: (val) => val.trim(),
         complete: function (results) {
+
             vsechnaData = results.data;
+
             vykresliTabulku();
+
             aktualizujStatistiky();
+
         }
-    });
+
+    }); 
 
     function ulozStav(id, hodnota) {
         if (stavKnih[id] === hodnota) {
