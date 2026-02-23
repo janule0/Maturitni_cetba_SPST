@@ -11,7 +11,7 @@
 <body>
     <h1>Maturitní četba SPŠT</h1><h3>2025/26</h3>
     <select id="filter-obdobi">
-        <option value="vsechna">obdobi</option>
+        <option value="vsechna">všechna období</option>
         <option value="Světová a česká lit. do konce 18. století">18. století</option>
         <option value="Světová a česká lit. 19. století">19. století</option>
         <option value="Světová literatura 20. a 21. století">20. a 21. století - světová</option>
@@ -19,17 +19,17 @@
     </select>
     
     <select id="filter-druhy">
-        <option value="vsechny">druhy</option>
+        <option value="vsechny">všechny literární druhy</option>
         <option value="poezie">poezie</option>
         <option value="próza">próza</option>
         <option value="drama">drama</option>
     </select>
     
     <select id="filter-stav">
-        <option value="vsechny">zobrazit</option>
-        <option value="precteno">přečteno</option>
-        <option value="rozecteno">rozečteno</option>
-        <option value="planuju">plánuju</option>
+        <option value="vsechny">zobrazit všechny</option>
+        <option value="precteno">přečtené</option>
+        <option value="rozecteno">rozečtené</option>
+        <option value="planuju">plánuji</option>
     </select>
     
     <div class="table-container">
@@ -92,7 +92,7 @@
     
     localStorage.setItem('stavMaturitniCetby', JSON.stringify(stavKnih));
     vykresliTabulku();
-    aktualizujStatistiky();
+    //aktualizujStatistiky(); idk co to znamena
 }
     function vykresliTabulku() {
         const tableBody = document.getElementById('table-body');
