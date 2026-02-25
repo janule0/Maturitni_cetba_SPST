@@ -134,7 +134,7 @@ input[type='radio']:checked {
     margin: 0 auto;
 }
 
-th:not(:first-child), 
+th:not(:first-child), // nefunguje asi idk
 td:not(:first-child) {
     width: 20px; 
 }
