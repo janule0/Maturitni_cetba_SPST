@@ -10,11 +10,10 @@
 
 <body>
    <div class="menu">
-        <!--cesty dodadat-->
-        <img src="ikonka_check.png" class="icon" alt="check">
-        <img src="ikonka_pdf.png" class="icon" alt="pdf">
-        <img src="ikonka_oko.png" class="icon" alt="oko">
-        <img src="ikonka_guma.png" class="icon" alt="guma">
+        <img src="Icon_checkmark.png" class="icon" alt="check">
+        <img src="Icon_pdf.png" class="icon" alt="pdf">
+        <img src="Icon_nightmode.png" class="icon" alt="mesicek/slunicko">
+        <img src="Icon_eraser.png" class="icon" alt="guma (kazdy musi nekdy zacit znova <3)">
   </div>
   
     <h1>Maturitní četba SPŠT</h1>
@@ -49,9 +48,9 @@
         <thead>
             <tr>
               <th></th> 
-              <th><i class="precteno"></i><br><span style="font-size:10px; color:gray;">přečteno</span></th>     <!--hvezdicka, polohvezdicka, kalendar ikonky dodelat-->
-              <th><i class="rozecteno"></i><br><span style="font-size:10px; color:gray;">rozečteno</span></th>
-              <th><i class="planuju"></i><br><span style="font-size:10px; color:gray;">plánuji</span></th>
+              <th><i class="precteno" img src="Icon_star.png" title="přečteno (k maturitě)"></th>
+              <th><i class="rozecteno" img src="Icon_halfstar.png" title="rozečteno"></th>
+              <th><i class="planuju" img src="Icon_calendar.png" title="plánuji přečíst"></th>
             </tr>
         </thead>
         <tbody id="table-body">
@@ -92,7 +91,7 @@
         if (pocetPrectenych >= 20) {
             document.getElementById('pocitadlo').style.color = "#0056b3"; // modra
         } else {
-            document.getElementById('pocitadlo').style.color = "#000"; // cerna idk
+            document.getElementById('pocitadlo').style.color = "#000"; 
         }
     }
 
