@@ -39,7 +39,7 @@ select {
     border-radius: 5px;
     border: 1px solid #333;
     padding: 6px 12px;
-    margin-right: 8px;
+    margin-right: 15px;
     margin-bottom: 20px;
     background-color: white;
     font-family: inherit;
@@ -132,4 +132,9 @@ input[type='radio']:checked {
     width: auto;
     display: block;
     margin: 0 auto;
+}
+
+th:not(:first-child), 
+td:not(:first-child) {
+    width: 40px; 
 }
