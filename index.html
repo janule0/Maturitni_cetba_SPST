@@ -173,9 +173,9 @@
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td><strong>${row["Autor"]}:</strong> ${row["Název díla"]}</td>
-                    <td><input type="radio" name="r-${idKnihy}" ${aktualniStav === 'precteno' ? 'checked' : ''} onchange="ulozStav('${idKnihy}', 'precteno')"></td>
-                    <td><input type="radio" name="r-${idKnihy}" ${aktualniStav === 'rozecteno' ? 'checked' : ''} onchange="ulozStav('${idKnihy}', 'rozecteno')"></td>
-                    <td><input type="radio" name="r-${idKnihy}" ${aktualniStav === 'planuju' ? 'checked' : ''} onchange="ulozStav('${idKnihy}', 'planuju')"></td>
+                    <td><input type="radio" name="r-${idKnihy}" ${aktualniStav === 'precteno' ? 'checked' : ''} onclick="ulozStav('${idKnihy}', 'precteno')"></td>
+                    <td><input type="radio" name="r-${idKnihy}" ${aktualniStav === 'rozecteno' ? 'checked' : ''} onclick="ulozStav('${idKnihy}', 'rozecteno')"></td>
+                    <td><input type="radio" name="r-${idKnihy}" ${aktualniStav === 'planuju' ? 'checked' : ''} onclick="ulozStav('${idKnihy}', 'planuju')"></td>
                 `;
                 tableBody.appendChild(tr);
             }
