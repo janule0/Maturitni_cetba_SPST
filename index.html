@@ -9,7 +9,11 @@
 </head>
 
 <body>
-    <h1>Maturitní četba SPŠT</h1><h3>2025/26</h3>
+    <h1>Maturitní četba SPŠT</h1>
+    <h3>2025/26</h3>
+
+    <h3 id="pocitadlo" style="color: #d9534f;">Přečteno: 0/20</h3>
+
     <select id="filter-obdobi">
         <option value="vsechna">všechna období</option>
         <option value="Světová a česká lit. do konce 18. století">18. století</option>
@@ -42,7 +46,7 @@
             </tr>
         </thead>
         <tbody id="table-body">
-            </tbody>
+        </tbody>
     </table>
     </div>
 
@@ -51,7 +55,20 @@
     let vsechnaData = []; 
     let stavKnih = JSON.parse(localStorage.getItem('stavMaturitniCetby')) || {};
 
-    Papa.parse(csvFile, {       //převod csv souboru
+    function aktualizujPocitadlo() {
+        const pocetPrectenych = Object.values(stavKnih).filter(v => v === "precteno").length;
+        
+        const pocitadloElement = document.getElementById('pocitadlo');
+        pocitadloElement.innerText = `Přečteno: ${pocetPrectenych}/20`;
+        
+        if (pocetPrectenych === 20) {
+            pocitadloElement.style.color = "green"; // zelena = 20/20
+        } else {
+            pocitadloElement.style.color = "#d9534f"; // cervena - neni splneno 20 knih
+        }
+    }
+
+    Papa.parse(csvFile, {
         download: true,
         header: true,
         delimiter: ";",
@@ -61,52 +78,49 @@
         complete: function(results) {
             vsechnaData = results.data;
             vykresliTabulku();
+            aktualizujPocitadlo();
         }
     });
 
     function ulozStav(id, hodnota) {
-      // kontrola poctu
-    if (stavKnih[id] === hodnota) {
-        delete stavKnih[id];
-    } else {
+        if (stavKnih[id] === hodnota) {
+            delete stavKnih[id];
+        } else {
+            if (hodnota === "precteno") {
+                const pocetPrectenych = Object.values(stavKnih).filter(v => v === "precteno").length;
 
-        if (hodnota === "precteno") {
-            const pocetPrectenych = Object.values(stavKnih).filter(v => v === "precteno").length;
-
-            if (pocetPrectenych >= 20) {
-                alert("Do maturitního seznamu si můžeš vybrat maximálně 20 knih.");
-                vykresliTabulku();
-                return;
+                if (pocetPrectenych >= 20) {
+                    alert("Do maturitního seznamu si můžeš vybrat maximálně 20 knih.");
+                    vykresliTabulku();
+                    return;
+                }
             }
+            // kontrola autora
+            const autor = vsechnaData.find(row => (row.ID || `${row["Autor"]}-${row["Název díla"]}`) === id)?.["Autor"];
+            
+            if (hodnota === "precteno" && autor) {
+                const pocetOdAutora = Object.keys(stavKnih).filter(key => {
+                    const kniha = vsechnaData.find(r => (r.ID || `${r["Autor"]}-${r["Název díla"]}`) === key);
+                    return kniha && kniha["Autor"] === autor && key !== id && stavKnih[key] === "precteno";
+                }).length;
+
+                if (pocetOdAutora >= 2) {
+                    alert(`Od autora ${autor} už máš vybraná 2 díla.`);
+                    vykresliTabulku();
+                    return;
+                }
+            }
+
+            stavKnih[id] = hodnota;
         }
-        // kontrola autora
-        const autor = vsechnaData.find(row => (row.ID || `${row["Autor"]}-${row["Název díla"]}`) === id)?.["Autor"];
+
+        localStorage.setItem('stavMaturitniCetby', JSON.stringify(stavKnih));
         
-        if (hodnota === "precteno" && autor) {
-            const pocetOdAutora = Object.keys(stavKnih).filter(key => {
-                const kniha = vsechnaData.find(r => (r.ID || `${r["Autor"]}-${r["Název díla"]}`) === key);
-                return kniha && kniha["Autor"] === autor && key !== id && stavKnih[key] === "precteno";
-            }).length;
-
-            if (pocetOdAutora >= 2) {
-                alert(`Od autora ${autor} už máš vybraná 2 díla.`);
-                vykresliTabulku();
-                return;
-            }
-        }
-
-        stavKnih[id] = hodnota;
-    }
-
-    if (typeof vykresliTabulku === "function") {
         vykresliTabulku();
+        aktualizujPocitadlo();
     }
-  
-}
-    
-    localStorage.setItem('stavMaturitniCetby', JSON.stringify(stavKnih));
-    vykresliTabulku();
-    //aktualizujStatistiky(); idk co to znamena
+
+    aktualizujPocitadlo();
 
     function vykresliTabulku() {
         const tableBody = document.getElementById('table-body');
