@@ -188,6 +188,34 @@
     document.getElementById('filter-obdobi').addEventListener('change', vykresliTabulku);
     document.getElementById('filter-druhy').addEventListener('change', vykresliTabulku);
     document.getElementById('filter-stav').addEventListener('change', vykresliTabulku);
+
+     function aktualizujStatistiky() {
+     const stats = {
+         prectenoCelkem: 0,
+         "Světová a česká lit. do konce 18. století": 0,
+         "Světová a česká lit. 19. století": 0,
+         "Světová literatura 20. a 21. století": 0,
+         "Česká literatura 20. a 21. století": 0,
+         "próza": 0,
+         "poezie": 0,
+         "drama": 0
+     };
+
+     vsechnaData.forEach(row => {
+         const idKnihy = row.ID || `${row["Autor"]}-${row["Název díla"]}`;
+         const stav = stavKnih[idKnihy];
+         const druh = (row["Druh "] || "").toLowerCase().trim();
+         const obdobi = (row["Kategorie / Období"] || "").trim();
+
+         if (stav === "precteno") {
+             stats.prectenoCelkem++;
+         }
+
+         if (stav) {
+             if (stats.hasOwnProperty(obdobi)) stats[obdobi]++;
+             if (stats.hasOwnProperty(druh)) stats[druh]++;
+         }
+     });
     </script>
 </body>
 </html>
