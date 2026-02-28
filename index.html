@@ -110,6 +110,7 @@
             vsechnaData = results.data;
             vykresliTabulku();
             aktualizujPocitadlo();
+            aktualizujStatistiky();
         }
     });
 
@@ -149,10 +150,43 @@
         
         vykresliTabulku();
         aktualizujPocitadlo();
+        aktualizujStatistiky();
     }
 
     aktualizujPocitadlo();
 
+    function aktualizujStatistiky() {
+        const stats = {
+            "Světová a česká lit. do konce 18. století": 0,
+            "Světová a česká lit. 19. století": 0,
+            "Světová literatura 20. a 21. století": 0,
+            "Česká literatura 20. a 21. století": 0,
+            "próza": 0,
+            "poezie": 0,
+            "drama": 0
+        };
+
+        vsechnaData.forEach(row => {
+            const idKnihy = row.ID || `${row["Autor"]}-${row["Název díla"]}`;
+            const stav = stavKnih[idKnihy];
+            const druh = (row["Druh "] || "").toLowerCase().trim();
+            const obdobi = (row["Kategorie / Období"] || "").trim();
+
+            if (stav) {
+                if (stats.hasOwnProperty(obdobi)) stats[obdobi]++;
+                if (stats.hasOwnProperty(druh)) stats[druh]++;
+            }
+        });
+      
+        document.getElementById('18Precteno').innerText = `${stats["Světová a česká lit. do konce 18. století"]}/2`;
+        document.getElementById('19Precteno').innerText = `${stats["Světová a česká lit. 19. století"]}/3`;
+        document.getElementById('20Precteno_sv').innerText = `${stats["Světová literatura 20. a 21. století"]}/4`;
+        document.getElementById('20Precteno_cz').innerText = `${stats["Česká literatura 20. a 21. století"]}/5`;
+        document.getElementById('prozaPrecteno').innerText = `${stats["próza"]}/2`;
+        document.getElementById('poeziePrecteno').innerText = `${stats["poezie"]}/2`;
+        document.getElementById('dramaPrecteno').innerText = `${stats["drama"]}/2`;
+    }
+      
     function vykresliTabulku() {
         const tableBody = document.getElementById('table-body');
         tableBody.innerHTML = ""; 
