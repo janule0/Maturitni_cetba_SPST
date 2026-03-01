@@ -1,5 +1,4 @@
 body {
-    /*background-image: url("book_bg3.jpg");*/
     background-color: #f0f4f8;
     background-repeat: no-repeat;
     background-size: cover;
@@ -106,7 +105,7 @@ input[type='radio']:checked {
     border-radius: 10px;
     padding: 15px;
     min-height: 250px;
-    font-size: 14px;
+    font-size: 18px;
     line-height: 1.6;
 }
 
@@ -134,7 +133,49 @@ input[type='radio']:checked {
     margin: 0 auto;
 }
 
-th:not(:first-child), // nefunguje asi idk
+th:not(:first-child), /* nefunguje asi idk*/
 td:not(:first-child) {
     width: 20px; 
+}
+
+@media(max-width: 1000px){
+    .menu {
+        right: 40px;
+        top: 30px;
+    }
+
+    h1{
+        position: absolute;
+        top: 20px;
+        left: 25px;
+    }
+
+    rok {
+        position: absolute;
+        top: 35px;
+        left: 355px;
+    }
+    
+    .overview
+    {   
+        top:160px;
+        width: 260px;
+    }
+
+    select {
+        margin-top:20px;
+        margin-left: -10px;
+    }
+}
+
+@media(max-width: 850px){
+    
+    table{
+       max-width: 400px
+    }
+    .overview
+    {   
+        top:160px;
+        width: 200px;
+    }
 }
