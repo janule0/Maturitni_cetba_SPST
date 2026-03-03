@@ -179,3 +179,68 @@ td:not(:first-child) {
         width: 200px;
     }
 }
+
+/*popup cookies*/
+#consent {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  resize: vertical;
+  overflow: auto;
+  z-index: 999999999;
+  background: rgba(0, 0, 0, 0.7);
+}
+#consent .consent-container {
+  position: absolute;
+  top: 25%;
+  border-radius: 15px;
+  border: 6px solid gray;
+  left: 20px;
+  right: 20px;
+  margin: -100px auto 0;
+  background: #fff;
+  padding: 20px;
+  max-width: 500px;
+}
+#consent .choice {
+  text-align: right;
+}
+#consent button {
+  border: none;
+  border-radius: 15px;
+  padding: 10px 20px;
+  margin: 10px 0 0 10px;
+  background: none;
+  font-size: 1.1em;
+}
+#consent button.consent-allow {
+  background-color: #78cbff;
+  border: 2px solid #2b8ac4;
+  color: #fff;
+}
+
+#consent button.consent-allow:focus,
+#consent button.consent-allow:hover {
+  background-color: #1c5273;
+  border: 2px solid #07334f;
+  cursor: pointer;
+}
+#consent button.consent-deny {
+  padding: 5px 0;
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+#consent button.consent-deny:focus,
+button.consent-deny:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+#consent hr {
+  margin: 15px 0;
+}
+
+.consent-notice {
+    justify-content: right;
+}
