@@ -26,7 +26,7 @@
   -->
    <div class="menu">
         <img src="Icon_checkmark.png" class="icon" alt="check">
-        <img src="Icon_pdf.png" class="icon" alt="pdf">
+        <img src="Icon_pdf.png" class="icon" id="pdf-button" alt="pdf" title="Exportovat seznam do PDF">
         <img src="Icon_nightmode.png" class="icon" alt="mesicek/slunicko">
         <img src="Icon_eraser.png" class="icon" id="reset-button" alt="guma" title="Vymazat vše (kazdy musi nekdy zacit znova <3)">
   </div>
@@ -252,6 +252,81 @@
     document.getElementById('filter-druhy').addEventListener('change', vykresliTabulku);
     document.getElementById('filter-stav').addEventListener('change', vykresliTabulku);
 
+
+
+    //export do pdf
+      document.getElementById('pdf-button').addEventListener('click', function() {
+    const precteneId = Object.keys(stavKnih).filter(id => stavKnih[id] === "precteno");
+
+    if (precteneId.length === 0) {
+        alert("Tvůj seznam je prázdný, pro export musíš mít přečtená alespoň nějaká díla.");
+        return;
+    }
+
+    const vybraneKnihy = vsechnaData.filter(row => {
+        const idKnihy = row.ID || `${row["Autor"]}-${row["Název díla"]}`;
+        return precteneId.includes(idKnihy);
+    });
+
+    // tiskova sestava (vzhled pdf)
+    let obsah = `
+        <html>
+        <head>
+            <title>Maturitní seznam četby - export</title>
+            <style>
+                body { font-family: "Segoe UI", Arial, sans-serif; padding: 40px; line-height: 1.6; }
+                h1 { text-align: center; color: #333; border-bottom: 2px solid #333; padding-bottom: 10px; }
+                table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                th, td { border: 1px solid #000; padding: 10px; text-align: left; }
+                th { background-color: #f2f2f2; }
+                .footer { margin-top: 30px; font-size: 0.9em; text-align: right; font-style: italic; }
+                @media print {
+                    button { display: none; }
+                }
+            </style>
+        </head>
+        <body>
+            <h1>Seznam maturitní četby 2025/2026</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 50px;">č.</th>
+                        <th>Autor</th>
+                        <th>Název díla</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    vybraneKnihy.forEach((kniha, index) => {
+        obsah += `
+            <tr>
+                <td>${index + 1}.</td>
+                <td>${kniha["Autor"]}</td>
+                <td>${kniha["Název díla"]}</td>
+            </tr>
+        `;
+    });
+
+    obsah += `
+                </tbody>
+            </table>
+            <div class="footer">
+                Celkem děl: ${vybraneKnihy.length} / 20<br>
+                Vygenerováno dne: ${new Date().toLocaleDateString('cs-CZ')}
+            </div>
+        </body>
+        </html>
+    `;
+        
+    const tiskoveOkno = window.open('', '_blank');
+    tiskoveOkno.document.write(obsah);
+    tiskoveOkno.document.close();
+    
+    setTimeout(() => {
+        tiskoveOkno.print();
+    }, 500);
+});
    
     </script>
 </body>
