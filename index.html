@@ -27,7 +27,7 @@
    <div class="menu">
         <img src="Icon_checkmark.png" class="icon" alt="check">
         <img src="Icon_pdf.png" class="icon" id="pdf-button" alt="pdf" title="Exportovat seznam do PDF">
-        <img src="Icon_nightmode.png" class="icon" alt="mesicek/slunicko">
+        <img src="Icon_nightmode.png" class="icon" id="dark-mode-toggle" alt="dark mode">
         <img src="Icon_eraser.png" class="icon" id="reset-button" alt="guma" title="Vymazat vše (kazdy musi nekdy zacit znova <3)">
   </div>
     
@@ -327,7 +327,30 @@
         tiskoveOkno.print();
     }, 500);
 });
-   
+
+
+      //darkmode
+   const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const body = document.body;
+
+    darkModeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        
+        // zmena ikonky na slunce (neni hotovo)
+        if (body.classList.contains('dark-mode')) {
+            // darkModeToggle.src = 'img/sun_icon.png'; 
+        } else {
+            // darkModeToggle.src = 'img/moon_icon.png';
+        }
+        
+        // ulozeni preference do prohlizece
+        const isDarkMode = body.classList.contains('dark-mode');
+        localStorage.setItem('darkMode', isDarkMode);
+    });
+
+    if (localStorage.getItem('darkMode') === 'true') {
+        body.classList.add('dark-mode');
+    }
     </script>
 </body>
 </html>
