@@ -247,54 +247,51 @@ button.consent-deny:hover {
 
 /*darkmode*/
 body.dark-mode {
-    background-color: #343434;
+    background-color: #1a1a1a !important;
     color: #ffffff;
 }
 
-.dark-mode h1 {
+body.dark-mode h1 {
     color: #ffffff;
 }
 
-.dark-mode h3 {
+body.dark-mode h3 {
     color: #a78bfa;
 }
 
-.dark-mode select {
-    background-color: #1a1a1a;
-    color: white;
-    border-color: #444;
+/* pocitadlo */
+body.dark-mode #pocitadlo {
+    color: #ffffff !important;
 }
 
-.dark-mode input[type='radio'] {
+/* Panel vpravo */
+body.dark-mode .overview {
+    background-color: #3F2194;
+}
+
+body.dark-mode .overview-inner {
+    background-color: #7859C7;
+    color: #ffffff;
+}
+
+/* tabulka */
+body.dark-mode td, body.dark-mode th {
+    color: #ffffff;
+}
+
+/* ikonky */
+body.dark-mode .status-icon,
+body.dark-mode .icon:not(#dark-mode-toggle) {
+    filter: brightness(0) invert(1);
+}
+
+/* Radio buttony v dark mode */
+body.dark-mode input[type='radio'] {
     background: #1a1a1a;
     outline: 1.5px solid #a78bfa;
     border: 2px solid #1a1a1a;
 }
 
-.dark-mode input[type='radio']:checked {
+body.dark-mode input[type='radio']:checked {
     background: #a78bfa;
-}
-
-/* pravy panel - darkmode */
-.dark-mode .overview {
-    background-color: #3F2194;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-}
-
-.dark-mode .overview-inner {
-    background-color: #7859C7;
-    color: #f3f4f6;
-}
-
-.dark-mode #pocitadlo {
-    color: #ffffff;
-}
-
-/* Progress bar v dark mode */
-.dark-mode .progress-bar-container {
-    background-color: #1a1a1a;
-}
-
-.dark-mode .progress-bar-fill {
-    background-color: #a78bfa; /* Jasná fialová */
 }
