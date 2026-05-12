@@ -248,50 +248,21 @@ button.consent-deny:hover {
 /*darkmode*/
 body.dark-mode {
     background-color: #1a1a1a !important;
-    color: #ffffff;
 }
 
-body.dark-mode h1 {
-    color: #ffffff;
+body.dark-mode .icon, 
+body.dark-mode .status-icon {
+    filter: brightness(0) invert(1) !important;
 }
 
-body.dark-mode h3 {
-    color: #a78bfa;
-}
-
-/* pocitadlo */
 body.dark-mode #pocitadlo {
     color: #ffffff !important;
 }
 
-/* Panel vpravo */
-body.dark-mode .overview {
-    background-color: #3F2194;
+body.dark-mode .progress-bar-container {
+    background-color: #121212;
 }
 
-body.dark-mode .overview-inner {
-    background-color: #7859C7;
-    color: #ffffff;
-}
-
-/* tabulka */
-body.dark-mode td, body.dark-mode th {
-    color: #ffffff;
-}
-
-/* ikonky */
-body.dark-mode .status-icon,
-body.dark-mode .icon:not(#dark-mode-toggle) {
-    filter: brightness(0) invert(1);
-}
-
-/* Radio buttony v dark mode */
-body.dark-mode input[type='radio'] {
-    background: #1a1a1a;
-    outline: 1.5px solid #a78bfa;
-    border: 2px solid #1a1a1a;
-}
-
-body.dark-mode input[type='radio']:checked {
-    background: #a78bfa;
+body.dark-mode td {
+    color: #e0e0e0;
 }
