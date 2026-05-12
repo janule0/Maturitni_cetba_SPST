@@ -248,21 +248,49 @@ button.consent-deny:hover {
 /*darkmode*/
 body.dark-mode {
     background-color: #1a1a1a !important;
+    color: #ffffff;
+}
+
+body.dark-mode h1 {
+    color: #ffffff;
+}
+body.dark-mode h3 {
+    color: #a78bfa;
 }
 
 body.dark-mode .icon, 
 body.dark-mode .status-icon {
     filter: brightness(0) invert(1) !important;
+    opacity: 0.9;
 }
 
 body.dark-mode #pocitadlo {
     color: #ffffff !important;
 }
 
+body.dark-mode .overview {
+    background-color: #3F2194;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .overview-inner {
+    background-color: #7859C7;
+    color: #ffffff;
+}
+
 body.dark-mode .progress-bar-container {
     background-color: #121212;
+}
+body.dark-mode .progress-bar-fill {
+    background-color: #a78bfa;
 }
 
 body.dark-mode td {
     color: #e0e0e0;
+}
+
+body.dark-mode select {
+    background-color: #333;
+    color: white;
+    border: 1px solid #444;
 }
