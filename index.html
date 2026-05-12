@@ -25,10 +25,10 @@
 </div>  
   -->
    <div class="menu">
-        <img src="Icon_checkmark.png" class="icon" alt="check">
+        <img src="Icon_checkmark.png" class="icon" alt="Vypsání knih">
         <img src="Icon_pdf.png" class="icon" id="pdf-button" alt="pdf" title="Exportovat seznam do PDF">
-        <img src="Icon_nightmode.png" class="icon" id="dark-mode-toggle" alt="dark mode">
-        <img src="Icon_eraser.png" class="icon" id="reset-button" alt="guma" title="Vymazat vše (kazdy musi nekdy zacit znova <3)">
+        <img src="Icon_nightmode.png" class="icon" id="dark-mode-toggle" alt="Dark mode">
+        <img src="Icon_eraser.png" class="icon" id="reset-button" alt="guma" title="Vymazat vše">
   </div>
     
     <h1><img src="Icon_reader.png" class="icon" alt="ctenar">Maturitní četba SPŠT</h1>
@@ -336,11 +336,11 @@
     darkModeToggle.addEventListener('click', () => {
         body.classList.toggle('dark-mode');
         
-        // zmena ikonky na slunce (neni hotovo)
+
         if (body.classList.contains('dark-mode')) {
-            // darkModeToggle.src = 'img/sun_icon.png'; 
+            darkModeToggle.src = 'Icon_daymode.png'; 
         } else {
-            // darkModeToggle.src = 'img/moon_icon.png';
+            darkModeToggle.src = 'Icon_nightmode.png';
         }
         
         // ulozeni preference do prohlizece
