@@ -5,6 +5,10 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 30px;
     color: #000;
+
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease;
 }
 
 h1 {
@@ -23,6 +27,7 @@ h3 {
 .icon {
     height: 25px;
     cursor: pointer;
+    transition: 0.2s ease;
 }
 
 .menu {
@@ -35,14 +40,26 @@ h3 {
 }
 
 select {
-    border-radius: 5px;
-    border: 1px solid #333;
-    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid #666;
+    padding: 8px 14px;
     margin-right: 15px;
     margin-bottom: 20px;
     background-color: white;
     font-family: inherit;
     cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+select:hover {
+    border-color: #3b82f6;
+}
+
+select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
 }
 
 .table-container {
@@ -60,70 +77,42 @@ td, th {
     text-align: center;
 }
 
-td:first-child, th:first-child {
+td:first-child,
+th:first-child {
     text-align: left;
     width: 70%;
+}
+
+tr {
+    transition: 0.15s ease;
+    border-radius: 8px;
+}
+
+tbody tr:hover {
+    background-color: rgba(0, 32, 96, 0.05);
 }
 
 input[type='radio'] {
     box-sizing: border-box;
     appearance: none;
     background: white;
-    outline: 1.5px solid #333;
-    border: 2px solid white;
+    outline: none;
+    border: 1.5px solid #666;
     width: 16px;
     height: 16px;
     cursor: pointer;
-    border-radius: 2px;
+    border-radius: 4px;
+
+    transition: 0.15s ease;
+}
+
+input[type='radio']:hover {
+    border-color: #3b82f6;
 }
 
 input[type='radio']:checked {
-    background: #333;
-}
-
-.overview {
-    position: fixed;
-    top: 120px;
-    right: 40px;
-    width: 320px;
-    background-color: #9ac2f4;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    z-index: 100;
-}
-
-#pocitadlo {
-    margin: 0 0 10px 0;
-    color: #000;
-    font-size: 1.2rem;
-    font-weight: 600;
-}
-
-.overview-inner {
-    background-color: #f8fafd;
-    border-radius: 10px;
-    padding: 15px;
-    min-height: 250px;
-    font-size: 18px;
-    line-height: 1.6;
-}
-
-.progress-bar-container {
-    background-color: white;
-    border-radius: 10px;
-    height: 16px;
-    width: 100%;
-    margin-bottom: 15px;
-    overflow: hidden;
-}
-
-.progress-bar-fill {
-    background-color: #3b82f6;
-    height: 100%;
-    width: 0%;
-    border-radius: 10px;
-    transition: width 0.3s ease;
+    background: #3b82f6;
+    border-color: #3b82f6;
 }
 
 .status-icon {
@@ -131,12 +120,84 @@ input[type='radio']:checked {
     width: auto;
     display: block;
     margin: 0 auto;
+
+    transition: 0.2s ease;
 }
 
-th:not(:first-child), /* nefunguje asi idk*/
-td:not(:first-child) {
-    width: 20px; 
+.overview {
+    position: fixed;
+    top: 120px;
+    right: 40px;
+    width: 320px;
+
+    background: linear-gradient(
+        180deg,
+        #9ac2f4 0%,
+        #8ab6ef 100%
+    );
+
+    border-radius: 22px;
+    padding: 20px;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.08);
+
+    z-index: 100;
+
+    transition: all 0.25s ease;
 }
+
+#pocitadlo {
+    margin: 0 0 10px 0;
+    color: #000;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.overview-inner {
+    background-color: #f8fafd;
+
+    border-radius: 18px;
+    padding: 15px;
+    min-height: 250px;
+
+    font-size: 18px;
+    line-height: 1.6;
+
+    transition: all 0.25s ease;
+}
+
+/* PROGRESS BAR */
+
+.progress-bar-container {
+    background-color: rgba(255,255,255,0.7);
+
+    border-radius: 999px;
+    height: 16px;
+    width: 100%;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    background: linear-gradient(
+        90deg,
+        #60a5fa 0%,
+        #3b82f6 100%
+    );
+
+    height: 100%;
+    width: 0%;
+    border-radius: 999px;
+
+    transition: width 0.3s ease;
+}
+
+th:not(:first-child),
+td:not(:first-child) {
+    width: 20px;
+}
+
 
 @media(max-width: 1000px){
     .menu {
@@ -180,65 +241,73 @@ td:not(:first-child) {
     }
 }
 
-/*popup cookies*/
+/*cookie popup*/
+
 #consent {
-  height: 100vh;
-  width: 100vw;
-  position: fixed;
-  top: 0;
-  left: 0;
-  resize: vertical;
-  overflow: auto;
-  z-index: 999999999;
-  background: rgba(0, 0, 0, 0.7);
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    resize: vertical;
+    overflow: auto;
+    z-index: 999999999;
+    background: rgba(0, 0, 0, 0.7);
 }
+
 #consent .consent-container {
-  position: absolute;
-  top: 25%;
-  border-radius: 15px;
-  border: 6px solid gray;
-  left: 20px;
-  right: 20px;
-  margin: -100px auto 0;
-  background: #fff;
-  padding: 20px;
-  max-width: 500px;
+    position: absolute;
+    top: 25%;
+    border-radius: 15px;
+    border: 6px solid gray;
+    left: 20px;
+    right: 20px;
+    margin: -100px auto 0;
+    background: #fff;
+    padding: 20px;
+    max-width: 500px;
 }
+
 #consent .choice {
-  text-align: right;
+    text-align: right;
 }
+
 #consent button {
-  border: none;
-  border-radius: 15px;
-  padding: 10px 20px;
-  margin: 10px 0 0 10px;
-  background: none;
-  font-size: 1.1em;
+    border: none;
+    border-radius: 15px;
+    padding: 10px 20px;
+    margin: 10px 0 0 10px;
+    background: none;
+    font-size: 1.1em;
 }
+
 #consent button.consent-allow {
-  background-color: #78cbff;
-  border: 2px solid #2b8ac4;
-  color: #fff;
+    background-color: #78cbff;
+    border: 2px solid #2b8ac4;
+    color: #fff;
 }
 
 #consent button.consent-allow:focus,
 #consent button.consent-allow:hover {
-  background-color: #1c5273;
-  border: 2px solid #07334f;
-  cursor: pointer;
+    background-color: #1c5273;
+    border: 2px solid #07334f;
+    cursor: pointer;
 }
+
 #consent button.consent-deny {
-  padding: 5px 0;
-  font-size: 0.9em;
-  opacity: 0.8;
+    padding: 5px 0;
+    font-size: 0.9em;
+    opacity: 0.8;
 }
+
 #consent button.consent-deny:focus,
 button.consent-deny:hover {
-  opacity: 1;
-  cursor: pointer;
+    opacity: 1;
+    cursor: pointer;
 }
+
 #consent hr {
-  margin: 15px 0;
+    margin: 15px 0;
 }
 
 .consent-notice {
@@ -246,6 +315,7 @@ button.consent-deny:hover {
 }
 
 /*darkmode*/
+
 body.dark-mode {
     background-color: #1f1f22;
     color: #f3f4f6;
@@ -264,12 +334,22 @@ body.dark-mode .icon {
     opacity: 0.9;
 }
 
+body.dark-mode .status-icon {
+    filter:
+        brightness(0)
+        saturate(100%)
+        invert(73%)
+        sepia(32%)
+        saturate(1346%)
+        hue-rotate(219deg)
+        brightness(101%)
+        contrast(96%);
+}
+
 body.dark-mode select {
     background-color: #121214;
     color: #f3f4f6;
     border: 1px solid #3f3f46;
-    border-radius: 8px;
-    transition: 0.2s ease;
 }
 
 body.dark-mode select:hover {
@@ -290,18 +370,17 @@ body.dark-mode td {
     color: #f3f4f6;
 }
 
-body.dark-mode tr {
-    transition: 0.15s ease;
-}
-
-body.dark-mode tr:hover {
+body.dark-mode tbody tr:hover {
     background-color: rgba(255,255,255,0.03);
 }
 
 body.dark-mode input[type='radio'] {
     background: #18181b;
     border: 1.5px solid #71717a;
-    outline: none;
+}
+
+body.dark-mode input[type='radio']:hover {
+    border-color: #8b5cf6;
 }
 
 body.dark-mode input[type='radio']:checked {
@@ -317,29 +396,32 @@ body.dark-mode .overview {
     );
 
     border-radius: 22px;
+
     box-shadow:
         0 10px 30px rgba(0,0,0,0.45),
         inset 0 1px 0 rgba(255,255,255,0.04);
-        border: 1px solid rgba(255,255,255,0.05);
+
+    border: 1px solid rgba(255,255,255,0.05);
 }
 
 body.dark-mode .overview-inner {
     background-color: #6d4bc3;
+
     border-radius: 18px;
+
     color: white;
+
     box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.06);
+        inset 0 1px 0 rgba(255,255,255,0.06);
 }
 
 body.dark-mode #pocitadlo {
-    color: white;
+    color: white !important;
     font-weight: 700;
 }
 
 body.dark-mode .progress-bar-container {
     background-color: rgba(255,255,255,0.12);
-    border-radius: 999px;
-    overflow: hidden;
 }
 
 body.dark-mode .progress-bar-fill {
@@ -348,11 +430,10 @@ body.dark-mode .progress-bar-fill {
         #c4b5fd 0%,
         #8b5cf6 100%
     );
-
-    border-radius: 999px;
 }
 
-body.dark-mode b {
+body.dark-mode b,
+body.dark-mode span {
     color: white;
 }
 
