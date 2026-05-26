@@ -29,16 +29,15 @@ h3 {
 }
 
 .icon {
-    height: 25px;
-    cursor: pointer;
-    transition: 0.2s ease;
+    width: 26px;
+    height: 26px;
     object-fit: contain;
-
+    cursor: pointer;
     transition:
         transform 0.2s ease,
         opacity 0.2s ease,
         filter 0.25s ease;
-
+    
     flex-shrink: 0;
 }
 
@@ -47,8 +46,9 @@ h3 {
     right: 40px;
     top: 30px;
     display: flex;
-    gap: 15px;
     align-items: center;
+    gap: 15px;
+    min-height: 30px;
 }
 
 select {
