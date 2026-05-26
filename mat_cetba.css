@@ -201,24 +201,10 @@ input[type='radio']:checked {
     transition: width 0.3s ease;
 }
 
-
-.progress-bar-fill::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -40%;
-    width: 40%;
-    height: 100%;
-    background: rgba(255,255,255,0.25);
-    transform: skewX(-20deg);
-    animation: shine 2.5s infinite;
-}
-
 th:not(:first-child),
 td:not(:first-child) {
     width: 20px;
 }
-
 
 @media(max-width: 1000px){
     .menu {
