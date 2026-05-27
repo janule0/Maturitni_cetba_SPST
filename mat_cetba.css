@@ -358,7 +358,7 @@ body.dark-mode .consent-text {
 }
 
 body.dark-mode .consent-icon img {
-    filter: invert(85%) sepia(10%) saturate(2000%) hue-rotate(230deg) brightness(100%);
+    filter: brightness(0) saturate(100%) invert(16%) sepia(48%) saturate(6192%) hue-rotate(261deg) brightness(83%) contrast(98%);
     drop-shadow: 0 0 10px rgba(196, 181, 253, 0.3);
 }
 
