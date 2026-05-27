@@ -12,21 +12,24 @@
 </head>
 
 <body>
-  <!--
-  <div id="consent">
-  <div class="consent-container">
-    <div class="consent-notice">
-      <h4>Můžeme lokálně ukládat tvůj progres?</h4>
-      <img src="Icon_cookie.png" alt="cookie :3">
-      <p>Povol cookies pro sledování svého progresu v četbě! ₍^. .^₎⟆</p>
+  <!--cookies (localstorage)-->
+  <div id="consent-overlay">
+  <div id="consent-popup">
+    <div class="consent-content">
+      <div class="consent-icon">
+        <img src="Icon_cookie.png" alt="Cookie">
+      </div>
+      <div class="consent-text">
+        Povol cookies pro sledování svého progresu!
+      </div>
     </div>
-    <div class="choice">
-      <button value="false" class="consent-deny">Odmítnout</button>
-      <button value="true" class="consent-allow">Přijmout</button>
+    <div class="consent-buttons">
+      <button id="btn-deny" class="btn-secondary">Zakázat</button>
+      <button id="btn-allow" class="btn-primary">Povolit</button>
     </div>
   </div>
-</div>  
-  -->
+</div>
+  
    <div class="menu">
         <img src="Icon_checkmark.png" class="icon" alt="Vypsání knih">
         <img src="Icon_pdf.png" class="icon" id="pdf-button" alt="pdf" title="Exportovat seznam do PDF">
@@ -178,7 +181,9 @@
             stavKnih[id] = hodnota;
         }
 
-        localStorage.setItem('stavMaturitniCetby', JSON.stringify(stavKnih));
+        if (localStorage.getItem('cookieConsent') === 'granted') {
+          localStorage.setItem('stavMaturitniCetby', JSON.stringify(stavKnih));
+        }
         
         vykresliTabulku();
         aktualizujPocitadlo();
@@ -354,6 +359,31 @@
     if (localStorage.getItem('darkMode') === 'true') {
         body.classList.add('dark-mode');
     }
+
+
+// cookie pupup
+const consentOverlay = document.getElementById('consent-overlay');
+const btnAllow = document.getElementById('btn-allow');
+const btnDeny = document.getElementById('btn-deny');
+
+// kontrola jestli uz souhlasil
+window.addEventListener('load', () => {
+    const consent = localStorage.getItem('cookieConsent');
+    if (!consent) {
+        consentOverlay.style.display = 'flex';
+    }
+});
+
+btnAllow.addEventListener('click', () => {
+    localStorage.setItem('cookieConsent', 'granted');
+    consentOverlay.style.display = 'none';
+});
+
+btnDeny.addEventListener('click', () => {
+    localStorage.setItem('cookieConsent', 'denied');
+    consentOverlay.style.display = 'none';
+    
+});
     </script>
 </body>
 </html>
