@@ -19,7 +19,7 @@ body {
     position: sticky;
     top: 0;
     background-color: #f0f4f8;
-    z-index: 999;
+    z-index: 19;
     transition: all 0.3s ease;
     padding-bottom: 0rem !important; 
 }
@@ -178,6 +178,7 @@ input[type='radio']:checked {
     top: 120px;
     right: 40px;
     width: 320px;
+    z-index: 20;
 
     background: linear-gradient(
         180deg,
