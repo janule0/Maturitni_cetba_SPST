@@ -21,7 +21,8 @@ body {
     background-color: #f0f4f8;
     z-index: 999;
     transition: all 0.3s ease;
-    margin-bottom: -1rem;
+    margin-top: 1rem;
+    padding-bottom: -1rem;
 }
 
 .topbar.scrolled {
@@ -44,10 +45,6 @@ body {
     margin-bottom: 10px;
 }
 
-.topbar.scrolled .icon {
-    width: 25px;
-    height: 25px;
-}
 body.dark-mode .topbar {
     background-color: #1f1f22;
 }
