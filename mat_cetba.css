@@ -44,7 +44,7 @@ h3 {
 }
 
 .menu {
-    position: absolute;
+    position: static;    
     right: 40px;
     top: 30px;
     display: flex;
