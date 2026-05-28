@@ -44,31 +44,13 @@ h3 {
 }
 
 .menu {
-    position: static;    
+    position: absolute;    
     right: 40px;
     top: 30px;
     display: flex;
     align-items: center;
     gap: 15px;
     min-height: 30px;
-}
-
-.topbar {
-    position: sticky;
-    top: 0;
-    z-index: 999;
-    display: flex;
-    gap: 12px;
-    padding: 8px 0;
-    background: rgba(240, 244, 248, 0.92);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-}
-
-body.dark-mode .topbar {
-    background: rgba(31, 31, 34, 0.92);
-    border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
 select {
