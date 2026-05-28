@@ -21,7 +21,7 @@ body {
     background-color: #f0f4f8;
     z-index: 999;
     transition: all 0.3s ease;
-    padding-bottom: -1rem;
+    padding-bottom: 0rem !important; 
 }
 
 .topbar.scrolled {
