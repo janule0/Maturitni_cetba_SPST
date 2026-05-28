@@ -3,12 +3,8 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 30px;
+    margin: 30px;
     color: #000;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
 
     transition:
         background-color 0.25s ease,
@@ -18,7 +14,6 @@ body {
         transform 0.2s ease,
         opacity 0.2s ease;
 }
-
 h1 {
     display: inline-block;
     color: #002060;
