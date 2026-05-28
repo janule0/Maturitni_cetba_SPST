@@ -44,6 +44,10 @@ body {
     margin-bottom: 10px;
 }
 
+body.dark-mode .topbar {
+    background-color: #1f1f22;
+}
+
 h1 {
     display: inline-block;
     color: #002060;
