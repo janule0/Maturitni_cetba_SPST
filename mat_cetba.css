@@ -14,6 +14,36 @@ body {
         transform 0.2s ease,
         opacity 0.2s ease;
 }
+
+.topbar {
+    position: sticky;
+    top: 0;
+    background-color: #f0f4f8;
+    z-index: 999;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    transition: all 0.25s ease;
+}
+
+.topbar.scrolled {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.topbar.scrolled h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0;
+}
+
+.topbar.scrolled h3 {
+    font-size: 1rem;
+}
+
+.topbar.scrolled select {
+    padding: 5px 10px;
+    margin-bottom: 10px;
+}
+
 h1 {
     display: inline-block;
     color: #002060;
