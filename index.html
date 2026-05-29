@@ -277,6 +277,8 @@
         return precteneId.includes(idKnihy);
     });
 
+    const element = document.createElement('div');
+        
     // tiskova sestava (vzhled pdf)
     let obsah = `
         <html>
@@ -328,13 +330,18 @@
         </html>
     `;
         
-    const tiskoveOkno = window.open('', '_blank');
-    tiskoveOkno.document.write(obsah);
-    tiskoveOkno.document.close();
-    
-    setTimeout(() => {
-        tiskoveOkno.print();
-    }, 500);
+    element.innerHTML = obsah;  
+        
+    const opt = {
+            margin:       10,
+            filename:     'Maturitni_cetba_export.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        // Spuštění generování a automatického stažení souboru
+        html2pdf().set(opt).from(element).save();
 });
 
 
