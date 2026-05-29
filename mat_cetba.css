@@ -582,3 +582,15 @@ body.dark-mode footer {
 body.dark-mode footer b {
     color: #c4b5fd;
 }
+
+.light-mode-pdf, 
+.light-mode-pdf *, 
+body.dark-mode .light-mode-pdf, 
+body.dark-mode .light-mode-pdf * {
+    color: #000000 !important;
+    background-color: transparent !important;
+}
+
+.light-mode-pdf table {
+    background-color: #ffffff !important;
+}
