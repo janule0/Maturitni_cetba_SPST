@@ -265,10 +265,10 @@
       
     //vypsani knih
     document.getElementById('vypis-button').addEventListener('click', function() {
-    const precteneId = Object.keys(stavKnih).filter(id => stavKnih[id] === "precteno");
+    const precteneId = Object.keys(stavKnih).filter(id => stavKnih[id]);
 
-    if (precteneId.length !== 20) {
-        alert(`Tvůj seznam obsahuje ${precteneId.length} děl. Pro vygenerování finálního výpisu musíš mít označeno přesně 20 přečtených děl.`);
+    if (precteneId.length === 0) {
+        alert(`Tvůj seznam je prázdný. Pro výpis musíš mít vybraná alespoň nějaká díla.`);
         return;
     }
 
@@ -356,8 +356,8 @@
       document.getElementById('pdf-button').addEventListener('click', function() {
     const precteneId = Object.keys(stavKnih).filter(id => stavKnih[id] === "precteno");
 
-    if (precteneId.length === 0) {
-        alert("Tvůj seznam je prázdný, pro export musíš mít přečtená alespoň nějaká díla.");
+    if (precteneId.length !== 20) {
+        alert('Pro export finálního PDF musíš mít označeno přesně 20 přečtených děl.');
         return;
     }
 
