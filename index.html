@@ -167,10 +167,10 @@
             // kontrola autora
             const autor = vsechnaData.find(row => (row.ID || `${row["Autor"]}-${row["Název díla"]}`) === id)?.["Autor"];
             
-            if (hodnota === "precteno" && autor) {
+            if (autor) {
                 const pocetOdAutora = Object.keys(stavKnih).filter(key => {
                     const kniha = vsechnaData.find(r => (r.ID || `${r["Autor"]}-${r["Název díla"]}`) === key);
-                    return kniha && kniha["Autor"] === autor && key !== id && stavKnih[key] === "precteno";
+                    return kniha && kniha["Autor"] === autor && key !== id && stavKnih[key];
                 }).length;
 
                 if (pocetOdAutora >= 2) {
