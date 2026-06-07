@@ -79,8 +79,8 @@ h3 {
 
 .menu {
     position: absolute;    
-    right: 40px;
-    top: 30px;
+    right: 20px;
+    top: 10px;
     display: flex;
     align-items: center;
     gap: 15px;
@@ -271,16 +271,16 @@ td:not(:first-child) {
     width: 20px;
 }
 
-@media(max-width: 1000px){
-    .menu {
-        right: 40px;
-        top: 30px;
-    }
-
+@media(max-width: 1010px){
     h1{
         position: absolute;
-        top: 20px;
-        left: 25px;
+        left: 0px;
+    }
+    
+    h3
+    {
+        margin-top: 14px;
+        margin-left: 460px;
     }
 
     rok {
@@ -301,15 +301,378 @@ td:not(:first-child) {
     }
 }
 
+@media(max-width: 920px)
+{
+    .overview
+    {
+        position:absolute;
+        top: 200px;
+        margin-right: 10px;
+    }
+
+}
+
 @media(max-width: 850px){
     
+    table
+    {
+       max-width: 3500px
+    }
+    .overview
+    {   
+        top:200px;
+        right: 30px;
+        width: 200px;
+    }
+}
+
+@media(max-width: 835px){
+    
+    h1
+    {
+        top: 40px;
+    }
+    h3
+    {
+        margin-top:50px;
+    }
     table{
        max-width: 400px
     }
     .overview
     {   
-        top:160px;
+        top:240px;
         width: 200px;
+    }
+}
+
+@media(max-width: 644px){
+    
+    table{
+       max-width: 300px
+    }
+    .overview
+    {   
+        top:240px;
+        width: 200px;
+    }
+}
+
+
+@media(max-width: 622px){
+    
+    h3
+    {
+        margin-top: 100px;
+        margin-left:0px;
+    }
+    table{
+       max-width: 200px
+    }
+    .overview
+    {   
+        top: 290px;
+        width: 200px;
+    }
+}
+
+@media(max-width: 605px){
+    
+    #filter-obdobi
+    {
+        position: absolute;
+        left:5px;
+        bottom: -340px;
+    }
+    
+    #filter-druhy
+    {
+        position: absolute;
+        left:5px;
+        top: 485px;
+    }
+    
+    #filter-stav
+    {
+        position: absolute;
+        left:5px;
+        top: 527px;
+    }
+    
+    .topbar.scrolled h3 
+    {
+        margin-top: 70px;
+    }   
+    
+    h3
+    {
+        margin-top: 100px;
+        margin-left:0px;
+    }
+    
+    table
+    {
+       margin-top: 420px;
+       min-width: 500px
+    }
+    
+    .overview
+    {   
+        top: 180px;
+        left: 25px;
+        width: 500px;
+        max-height: 300px;
+    }
+    
+    .overview-inner
+    {
+        min-height: 150px;
+    }
+    
+    .druhy
+    {
+        margin-top: -170px;
+        margin-left: 310px;
+    }
+}
+
+@media(max-width: 590px){
+    
+    #filter-obdobi
+    {
+        position: absolute;
+        left:5px;
+        bottom: -340px;
+    }
+    
+    #filter-druhy
+    {
+        position: absolute;
+        left:5px;
+        top: 485px;
+    }
+    
+    #filter-stav
+    {
+        position: absolute;
+        left:5px;
+        top: 527px;
+    }
+    
+    .topbar.scrolled h3 
+    {
+        margin-top: 70px;
+    }   
+    
+    h3
+    {
+        margin-top: 100px;
+        margin-left:0px;
+    }
+    
+    table
+    {
+       margin-top: 420px;
+       min-width: 400px
+    }
+    
+    .overview
+    {   
+        top: 180px;
+        left: 25px;
+        width: 400px;
+        max-height: 300px;
+    }
+    
+    .overview-inner
+    {
+        min-height: 150px;
+    }
+    
+    .druhy
+    {
+        margin-top: -170px;
+        margin-left: 260px;
+    }
+}
+
+@media(max-width: 522px){
+    
+    #filter-obdobi
+    {
+        position: absolute;
+        left:5px;
+        bottom: -340px;
+    }
+    
+    #filter-druhy
+    {
+        position: absolute;
+        left:5px;
+        top: 555px;
+    }
+    
+    #filter-stav
+    {
+        position: absolute;
+        left:5px;
+        top: 599px;
+    }
+    
+    .topbar.scrolled h3 
+    {
+        margin-top: 70px;
+    }   
+    
+    h3
+    {
+        margin-top: 170px;
+        margin-left:0px;
+    }
+    
+    table
+    {
+       margin-top: 420px;
+       min-width: 400px
+    }
+    
+    .overview
+    {   
+        top: 250px;
+        left: 25px;
+        width: 400px;
+        max-height: 300px;
+    }
+    
+    .overview-inner
+    {
+        min-height: 150px;
+    }
+    
+    .druhy
+    {
+        margin-top: -170px;
+        margin-left: 260px;
+    }
+}
+
+@media(max-width: 485px){
+    
+    #filter-obdobi
+    {
+        position: absolute;
+        left:5px;
+        bottom: -340px;
+    }
+    
+    #filter-druhy
+    {
+        position: absolute;
+        left:5px;
+        top: 555px;
+    }
+    
+    #filter-stav
+    {
+        position: absolute;
+        left:5px;
+        top: 599px;
+    }
+    
+    .topbar.scrolled h3 
+    {
+        margin-top: 70px;
+    }   
+    
+    h3
+    {
+        margin-top: 170px;
+        margin-left:0px;
+    }
+    
+    table
+    {
+       margin-top: 420px;
+       min-width: 350px
+    }
+    
+    .overview
+    {   
+        top: 250px;
+        left: 25px;
+        max-width: 350px;
+        max-height: 300px;
+    }
+    
+    .overview-inner
+    {
+        min-height: 150px;
+    }
+    
+    .druhy
+    {
+        margin-top: -170px;
+        margin-left: 220px;
+    }
+}
+
+@media(max-width: 430px){
+    
+    #filter-obdobi
+    {
+        position: absolute;
+        left:5px;
+        bottom: -470px;
+    }
+    
+    #filter-druhy
+    {
+        position: absolute;
+        left:5px;
+        top: 685px;
+    }
+    
+    #filter-stav
+    {
+        position: absolute;
+        left:5px;
+        top: 727px;
+    }
+    
+    .topbar.scrolled h3 
+    {
+        margin-top: 70px;
+    }   
+    
+    h3
+    {
+        margin-top: 170px;
+        margin-left:0px;
+    }
+    
+    table
+    {
+       margin-top: 600px;
+       min-width: 300px
+    }
+    
+    .overview
+    {   
+        top: 250px;
+        left: 25px;
+        max-width: 250px;
+        max-height: 390px;
+    }
+    
+    .overview-inner
+    {
+        min-height: 150px;
+    }
+    
+    .druhy
+    {
+        margin-top: 0px;
+        margin-left: 0px;
     }
 }
 
