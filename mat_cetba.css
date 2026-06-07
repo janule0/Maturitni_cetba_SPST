@@ -628,6 +628,7 @@ body.dark-mode .light-mode-pdf * {
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    padding-right: 0;
 }
 
 .book-text {
@@ -643,8 +644,8 @@ body.dark-mode .light-mode-pdf * {
 }
 
 .info-icon-img {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     object-fit: contain;
 }
 
