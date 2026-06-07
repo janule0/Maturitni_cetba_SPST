@@ -211,7 +211,7 @@
         vsechnaData.forEach(row => {
             const idKnihy = row.ID || `${row["Autor"]}-${row["Název díla"]}`;
             const stav = stavKnih[idKnihy];
-            const druh = (row["Druh "] || "").toLowerCase().trim();
+            const druh = (row["Druh"] || "").toLowerCase().trim();
             const obdobi = (row["Kategorie / Období"] || "").trim();
 
             if (stav) {
@@ -241,7 +241,7 @@
             const idKnihy = row.ID || `kniha-${index}`;
             const aktualniStav = stavKnih[idKnihy] || "";
             
-            const druhUprava = (row["Druh "] || "").toLowerCase().trim();
+            const druhUprava = (row["Druh"] || "").toLowerCase().trim();
             
             // filtry
             const filtrObdobi = (Obdobii === "vsechna" || row["Kategorie / Období"] === Obdobii);
@@ -252,7 +252,7 @@
                 const tr = document.createElement('tr');
                 const zanr = row["Žánr"] || "Nezadáno";
                 const pocetStran = row["Počet stran"] || "-";
-                const druh = row["Druh "] || "-";
+                const druh = row["Druh"] || "-";
                 tr.innerHTML = `
                    <td>
                         <div class="book-row-layout">
