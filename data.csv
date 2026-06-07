@@ -1,21 +1,21 @@
-﻿ID;Kategorie / Období;Autor;Název díla;Druh 
-1;Světová a česká lit. do konce 18. století ;Homér ;Ilias ;poezie
-2;Světová a česká lit. do konce 18. století ;Homér ;Odyssea ;poezie
-3;Světová a česká lit. do konce 18. století ;Ezop ;Bajky ;próza
-4;Světová a česká lit. do konce 18. století ;Sofokles ;Král Oidipus ;drama 
-5;Světová a česká lit. do konce 18. století ;Ivan Olbracht ;Biblické příběhy ;próza
-6;Světová a česká lit. do konce 18. století ;William Shakespeare ;Romeo a Julie;drama 
-7;Světová a česká lit. do konce 18. století ;William Shakespeare ;Zkrocení zlé ženy ;drama
-8;Světová a česká lit. do konce 18. století ;Carlo Goldoni ;Sluha dvou pánů ;drama
-9;Světová a česká lit. do konce 18. století ;Molière ;Lakomec ;drama
-10;Světová a česká lit. do konce 18. století ;Johann Wolfgang Goethe ;Utrpení mladého Werthera ;próza
-11;Světová a česká lit. do konce 18. století ;Johann Wolfgang Goethe ;Král duchů ;poezie
-12;Světová a česká lit. 19. století ;Alexandr Sergejevič Puškin ;Evžen Oněgin;poezie
-13;Světová a česká lit. 19. století ;Victor Hugo ;Chrám Matky Boží v Paříži ;próza
-14;Světová a česká lit. 19. století ;Honoré de Balzac ;Otec Goriot ;próza
-15;Světová a česká lit. 19. století ;Émile Zola ;Zabiják ;próza
-16;Světová a česká lit. 19. století ;Edgar Allan Poe ;Povídky ;próza
-17;Světová a česká lit. 19. století ;Edgar Allan Poe ;Havran ;poezie
+﻿ID;Kategorie / Období;Autor;Název díla;Druh;Žánr;Počet stran
+1;Světová a česká lit. do konce 18. století ;Homér ;Ilias ;poezie;hrdinský epos;552
+2;Světová a česká lit. do konce 18. století ;Homér ;Odyssea ;poezie;hrdinský epos;488
+3;Světová a česká lit. do konce 18. století ;Ezop ;Bajky ;próza;bajka;105
+4;Světová a česká lit. do konce 18. století ;Sofoklés ;Král Oidipus ;drama;tragédie;84
+5;Světová a česká lit. do konce 18. století ;Ivan Olbracht ;Biblické příběhy ;próza;;120
+6;Světová a česká lit. do konce 18. století ;William Shakespeare ;Romeo a Julie;drama;tragédie;160
+7;Světová a česká lit. do konce 18. století ;William Shakespeare ;Zkrocení zlé ženy ;drama;komedie;163
+8;Světová a česká lit. do konce 18. století ;Carlo Goldoni ;Sluha dvou pánů ;drama;komedie;152
+9;Světová a česká lit. do konce 18. století ;Molière ;Lakomec ;drama;komedie;120
+10;Světová a česká lit. do konce 18. století ;Johann Wolfgang Goethe ;Utrpení mladého Werthera ;próza;romantický román;152
+11;Světová a česká lit. do konce 18. století ;Johann Wolfgang Goethe ;Král duchů ;poezie;lyricko-epická balada;2
+12;Světová a česká lit. 19. století ;Alexandr Sergejevič Puškin ;Evžen Oněgin;poezie;veršovaný román;240
+13;Světová a česká lit. 19. století ;Victor Hugo ;Chrám Matky Boží v Paříži ;próza;historický román;535
+14;Světová a česká lit. 19. století ;Honoré de Balzac ;Otec Goriot ;próza;realistický román;280
+15;Světová a česká lit. 19. století ;Émile Zola ;Zabiják ;próza;román;464
+16;Světová a česká lit. 19. století ;Edgar Allan Poe ;Povídky ;próza;román;335
+17;Světová a česká lit. 19. století ;Edgar Allan Poe ;Havran ;poezie;
 18;Světová a česká lit. 19. století ;Charles Baudelaire ;Květy zla ;poezie
 19;Světová a česká lit. 19. století ;Karel Hynek Mácha ;Máj;poezie
 20;Světová a česká lit. 19. století ;Karel Jaromír Erben ;Kytice ;poezie
