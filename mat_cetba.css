@@ -623,10 +623,15 @@ body.dark-mode .light-mode-pdf * {
     background-color: #ffffff !important;
 }
 
-.book-title-container {
+.book-row-layout {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 8px;
+    width: 100%;
+}
+
+.book-text {
+    padding-right: 15px; 
 }
 
 .info-tooltip-container {
@@ -634,42 +639,31 @@ body.dark-mode .light-mode-pdf * {
     display: inline-flex;
     align-items: center;
     cursor: pointer;
+    flex-shrink: 0; 
 }
 
 .info-icon-img {
-    width: 20px; 
+    width: 20px;
     height: 20px;
     object-fit: contain;
-    vertical-align: middle;
 }
 
 .info-tooltip-container .tooltip-content {
     display: none;
     position: absolute;
-    bottom: 125%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #fff;
-    color: #333;
-    border: 1px solid #ccc;
+    bottom: 130%; 
+    right: 0; 
+    background-color: #ffffff;
+    color: #333333;
+    border: 1px solid #cccccc;
     padding: 10px;
     border-radius: 6px;
     box-shadow: 0px 4px 12px rgba(0,0,0,0.15);
-    width: 160px;
-    z-index: 10;
+    width: 180px;
+    z-index: 100;
     font-size: 13px;
     line-height: 1.4;
-}
-
-.info-tooltip-container .tooltip-content::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: #fff transparent transparent transparent;
+    text-align: left;
 }
 
 .info-tooltip-container:hover .tooltip-content {
@@ -678,9 +672,6 @@ body.dark-mode .light-mode-pdf * {
 
 body.dark-mode .tooltip-content {
     background-color: #2a2a2a;
-    color: #fff;
-    border-color: #444;
-}
-body.dark-mode .tooltip-content::after {
-    border-color: #2a2a2a transparent transparent transparent;
+    color: #ffffff;
+    border-color: #444444;
 }
