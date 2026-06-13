@@ -490,13 +490,17 @@ btnDeny.addEventListener('click', () => {
 });
 
 const topbar = document.getElementById("topbar");
+const overview = document.getElementById("overview");
 window.addEventListener("scroll", () => {
 
     if (window.scrollY > 40) {
         topbar.classList.add("scrolled");
+        overview.classList.add("scrolled");
     }     
-    else {
+    else 
+    {
         topbar.classList.remove("scrolled");
+        overview.classList.add("scrolled");
     }
 });
     </script>
