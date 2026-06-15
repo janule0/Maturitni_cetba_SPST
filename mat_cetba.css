@@ -1043,3 +1043,19 @@ body.dark-mode .tooltip-content {
 body.dark-mode .info-toggle {
     content: url('Icon_info3_dark.png');
 }
+
+.obdobi-header {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.pocitadlo-vpravo {
+    font-weight: 700;
+    color: #0056b3;
+}
+
+body.dark-mode .pocitadlo-vpravo {
+    color: #ffffff;
+}
