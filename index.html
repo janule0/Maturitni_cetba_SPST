@@ -89,7 +89,10 @@
       <h3 id="pocitadlo" style="color: #d9534f;">Přečteno: 0/20</h3>
       <div class="overview-inner">
         <div class="obdobi">
-          <span><b>Období:</b></span><br>
+          <div class="obdobi-header">
+            <b>Období:</b>
+            <span id="celkem-vybrano" class="pocitadlo-vpravo">0/20</span>
+          </div>
           <span>18. století:</span> <span id="18Precteno"></span><br>
           <span>19. století:</span> <span id="19Precteno"></span><br>
           <span>20. století - světová:</span> <span id="20Precteno_sv"></span><br>
@@ -122,6 +125,9 @@
         } else {
             document.getElementById('pocitadlo').style.color = "#000"; 
         }
+
+        const pocetVybranychCelkem = Object.values(stavKnih).filter(v => v === "precteno" || v === "rozecteno" || v === "planuju").length;
+        document.getElementById('celkem-vybrano').innerText = `${pocetVybranychCelkem}/20`;
     }
 
       //reset radiobuttonu (guma)
