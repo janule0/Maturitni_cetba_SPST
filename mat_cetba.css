@@ -1007,8 +1007,8 @@ body.dark-mode .light-mode-pdf * {
 }
 
 .info-icon-img {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     object-fit: contain;
 }
 
@@ -1038,4 +1038,8 @@ body.dark-mode .tooltip-content {
     background-color: #2a2a2a;
     color: #ffffff;
     border-color: #444444;
+}
+
+body.dark-mode .info-toggle {
+    content: url('Icon_info3_dark.png');
 }
