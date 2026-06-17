@@ -41,6 +41,8 @@ body {
 .topbar.scrolled select {
     padding: 5px 10px;
     margin-bottom: 10px;
+    width:170px;
+    font-size: 80%
 }
 
 body.dark-mode .topbar {
@@ -118,6 +120,7 @@ select:focus {
 table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 40px;
 }
 
 td, th {
@@ -434,18 +437,20 @@ td:not(:first-child) {
         top: 60px;
     }
     
-    .topbar.scrolled #filter-obdobi
+   .topbar.scrolled #filter-obdobi
     {
         top:335px;
     }
     .topbar.scrolled #filter-druhy
     {
-        top:365px;
+        top:335px;
+        left: 190px
     }
     
      .topbar.scrolled #filter-stav
     {
-        top:395px;
+        top:335px;
+        left:380px;
     }
 }
 
@@ -506,7 +511,12 @@ td:not(:first-child) {
         margin-top: 65px;
         margin-left: 0px;
     }
-    
+
+    .topbar.scrolled select
+    {
+        width: 140px;
+    }
+
     .overview.scrolled 
     {
         top: 110px;
@@ -519,12 +529,14 @@ td:not(:first-child) {
     
     .topbar.scrolled #filter-druhy
     {
-        top: 442px;
+        top: 410px;
+        left: 150px;
     }
     
      .topbar.scrolled #filter-stav
     {
-        top:473px;
+        top:410px;
+        left: 300px;
     }
 }
 
@@ -611,6 +623,28 @@ td:not(:first-child) {
         margin-top: -150px;
         margin-left: 220px;
     }
+
+    .topbar.scrolled select
+    {
+        width: 120px;
+    }
+    
+    .topbar.scrolled #filter-obdobi
+    {
+        top: 410px;
+    }
+    
+    .topbar.scrolled #filter-druhy
+    {
+        top: 410px;
+        left: 130px;
+    }
+    
+     .topbar.scrolled #filter-stav
+    {
+        top:410px;
+        left: 260px;
+    }
 }
 
 @media(max-width: 430px)
@@ -661,16 +695,16 @@ td:not(:first-child) {
     
     .topbar.scrolled #filter-druhy
     {
-        top: 565px;
+        top: 533px;
     }
     
      .topbar.scrolled #filter-stav
     {
-        top: 597px;
+        top: 533px;
     }
 }
 
-@media(max-width: 342px)
+@media(max-width: 410px)
 {  
     .topbar.scrolled .rok
     {
@@ -683,19 +717,26 @@ td:not(:first-child) {
         top:120px;
     }
     
-    .topbar.scrolled #filter-obdobi
+   .topbar.scrolled #filter-obdobi
     {
         top: 533px;
     }
     
      .topbar.scrolled #filter-druhy
     {
-        top: 563px;
+        top: 533px;
+        left: 100px;
     }
     
      .topbar.scrolled #filter-stav
     {
-        top: 593px;
+        top: 533px;
+        left:200px;
+    }
+    
+    .topbar.scrolled select
+    {
+        width: 100px;
     }
     
     .rok
