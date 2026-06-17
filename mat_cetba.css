@@ -1100,7 +1100,7 @@ body.dark-mode .light-mode-pdf * {
     border-radius: 6px;
     box-shadow: 0px 4px 12px rgba(0,0,0,0.15);
     width: 180px;
-    z-index: 100;
+    z-index: 9999;
     font-size: 13px;
     line-height: 1.4;
     text-align: left;
